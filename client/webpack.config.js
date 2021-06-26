@@ -17,6 +17,7 @@ module.exports = {
     proxy: {
       '/user': 'http://localhost:3001',
     },
+    historyApiFallback: true,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
