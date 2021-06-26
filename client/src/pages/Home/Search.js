@@ -16,6 +16,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
+import AmazonLogo from '../../components/logos/AmazonLogo';
+import EbayLogo from '../../components/logos/EbayLogo';
+import WalmartLogo from '../../components/logos/WalmartLogo';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,8 +42,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.5em',
   },
   retailAvatar: {
-    color: theme.palette.secondary.main,
-    fontSize: 40,
+    backgroundColor: '#00000000'
   },
   retailerCheckboxes: {
     width: '100%',
@@ -57,6 +59,7 @@ function Search() {
   const [retailers, setRetailers] = useState([]);
   const [userInput, setUserInput] = useState('');
   const retailArray = ['Amazon', 'eBay', 'Walmart'];
+  const retailLogoArray = [<AmazonLogo />, <EbayLogo />, <WalmartLogo />];
 
   const handleInputChange = event => setUserInput(event.target.value);
 
@@ -121,7 +124,7 @@ function Search() {
                   <ListItemText id={labelId} primary={retailArray[value]} />
                   <ListItemSecondaryAction>
                     <Avatar variant="square" className={classes.retailAvatar}>
-                      {retailArray[value][0]}
+                      {retailLogoArray[value]}
                     </Avatar>
                   </ListItemSecondaryAction>
                 </ListItem>
