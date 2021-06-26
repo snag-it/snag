@@ -1,11 +1,12 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Search from './Search';
 
 const useStyles = makeStyles(theme => ({
-  sampleStyle: {
-    color: '#000',
+  root: {
+    margin: theme.spacing(10, 0, 0, 0),
   },
 }));
 
@@ -13,6 +14,13 @@ export default function Home() {
   const classes = useStyles();
 
   return (
-    <Typography variant='h6' className={classes.sampleStyle}>client/src/pages/index.js</Typography>
+    <Grid
+      container
+      className={classes.root}
+      direction="column"
+      justify="center"
+      alignContent="center">
+      <Search />
+    </Grid>
   );
 }
