@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function RetailList({ logo, productData }) {
+function RetailList({ retailer, logo, productData }) {
   const classes = useStyles()
   return (
     <ul className={classes.root}>
@@ -16,7 +16,7 @@ function RetailList({ logo, productData }) {
         <RetailItem
           key={product.id}
           currentItemId={product.id}
-          retailer='ebay' // TODO: conditionally render this
+          retailer={retailer}
           title={product.title}
           price={product.price}
           image={product.img}

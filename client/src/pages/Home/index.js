@@ -6,9 +6,12 @@ import RetailList from '../../components/RetailList';
 import Search from './Search';
 import AmazonLogo from '../../components/logos/AmazonLogo';
 import EbayLogo from '../../components/logos/EbayLogo';
-import WalmartLogo from '../../components/logos/WalmartLogo';
-import { fakeData } from './fakeData'; // This should come from store state.
+import TargetLogo from '../../components/logos/TargetLogo';
 
+// This should come from store state.
+import { fakeAmazonData } from '../../fakeData/fakeAmazonData';
+import { fakeEbayData } from '../../fakeData/fakeEbayData';
+import { fakeTargetData } from '../../fakeData/fakeTargetData';
 const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(10, 0),
@@ -26,7 +29,23 @@ export const index = props => {
       justify="center"
       alignContent="center">
       <Search />
-      <RetailList logo={<EbayLogo />} productData={fakeData}  />
+      <Grid container direction="row" justify="center" alignContent="center">
+        <RetailList
+          retailer="ebay"
+          logo={<EbayLogo />}
+          productData={fakeEbayData}
+        />
+        <RetailList
+          retailer="amazon"
+          logo={<AmazonLogo />}
+          productData={fakeAmazonData}
+        />
+        <RetailList
+          retailer="target"
+          logo={<TargetLogo />}
+          productData={fakeTargetData}
+        />
+      </Grid>
     </Grid>
   );
 };

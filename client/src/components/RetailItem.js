@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import amazonPlaceholder from '../../public/img/amazonPlaceholder.png';
 import ebayPlaceholder from '../../public/img/ebayPlaceholder.png';
+import targetPlaceholder from '../../public/img/targetPlaceholder.png';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,6 +21,9 @@ const useStyles = makeStyles(theme => ({
   },
   li: {
     listStyle: 'none',
+  },
+  cardHeader: {
+    height: '130px',
   },
   media: {
     height: 0,
@@ -58,12 +62,14 @@ export default function RetailItem({
   useEffect(() => {
     retailer === 'ebay' && setPlaceholder(ebayPlaceholder);
     retailer === 'amazon' && setPlaceholder(amazonPlaceholder);
+    retailer === 'target' && setPlaceholder(targetPlaceholder);
   }, []);
-
+  console.log('currentItemId', currentItemId);
   return (
     <li className={classes.li}>
       <Card className={classes.root} elevation={2}>
         <CardHeader
+          className={classes.cardHeader}
           avatar={
             <Avatar
               variant="square"
@@ -91,7 +97,9 @@ export default function RetailItem({
         />
         <CardMedia
           className={classes.media}
-          style={!image ? { backgroundSize: 'contain' } : null}
+          style={
+            !image ? { backgroundSize: 'contain', margin: '0px 16px' } : null
+          }
           image={image ? image : placeholder}
           title={title}
         />
