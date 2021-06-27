@@ -40,14 +40,17 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     fontSize: '1.5em',
+    width: '300%',
   },
   retailAvatar: {
-    backgroundColor: '#00000000'
+    backgroundColor: '#00000000',
   },
   retailerCheckboxes: {
     width: '100%',
   },
   button: {
+    width: '120px',
+    fontSize: '20px',
     marginLeft: theme.spacing(1),
     height: '70px',
   },
@@ -55,13 +58,17 @@ const useStyles = makeStyles(theme => ({
 
 function Search() {
   const classes = useStyles();
-  const [checked, setChecked] = useState([]);
+  const [checked, setChecked] = useState([0, 1, 2]);
   const [retailers, setRetailers] = useState([]);
   const [userInput, setUserInput] = useState('');
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [placeholder, setPlaceholder] = useState('');
   const retailArray = ['Amazon', 'eBay', 'Walmart'];
   const retailLogoArray = [<AmazonLogo />, <EbayLogo />, <WalmartLogo />];
 
-  const handleInputChange = event => setUserInput(event.target.value);
+  useEffect(() => {
+    setRetailers(checked.map(value => retailArray[value]));
+  }, [checked]);
 
   const handleChecks = value => () => {
     const currentIndex = checked.indexOf(value);
@@ -72,14 +79,21 @@ function Search() {
     setChecked(newChecked);
   };
 
-  useEffect(() => {
-    setRetailers(checked.map(value => retailArray[value]));
-  }, [checked]);
+  const handleInputChange = event => setUserInput(event.target.value);
+  const handleToggleAccordianExpansion = event => setIsExpanded(!isExpanded);
+  const handleSearchSubmit = () => {
+    isExpanded && handleToggleAccordianExpansion();
+    const uriEncodedInput = encodeURI(userInput);
+    if (userInput.length === 0) setPlaceholder('Search for an item')
+    else console.log({ uriEncodedInput, retailers }); // api call here
+  };
 
-  console.log({ userInput, retailers }); // api call here
   return (
     <Grid container direction="row" justify="center">
-      <Accordion className={classes.root}>
+      <Accordion
+        className={classes.root}
+        expanded={isExpanded}
+        onClick={handleToggleAccordianExpansion}>
         <AccordionSummary
           expandIcon={<AddIcon fontSize="large" />}
           aria-label="Expand"
@@ -93,6 +107,7 @@ function Search() {
             label={
               <InputBase
                 className={classes.input}
+                placeholder={placeholder}
                 fullWidth
                 value={userInput}
                 onChange={handleInputChange}
@@ -100,11 +115,10 @@ function Search() {
             }
           />
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails onClick={event => event.stopPropagation()}>
           <List className={classes.retailerCheckboxes}>
             {[0, 1, 2].map(value => {
               const labelId = `checkbox-list-label-${value}`;
-
               return (
                 <ListItem
                   key={value}
@@ -133,7 +147,11 @@ function Search() {
           </List>
         </AccordionDetails>
       </Accordion>
-      <Button className={classes.button} variant="contained" color="secondary">
+      <Button
+        className={classes.button}
+        onClick={handleSearchSubmit}
+        variant="contained"
+        color="secondary">
         submit
       </Button>
     </Grid>
