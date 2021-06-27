@@ -4,15 +4,15 @@ import RetailItem from './RetailItem';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: theme.spacing(10)
-  }
-}))
+    marginTop: theme.spacing(10),
+  },
+}));
 
 function RetailList({ retailer, logo, productData }) {
-  const classes = useStyles()
+  const classes = useStyles();
   return (
     <ul className={classes.root}>
-      {productData.map((product, index) => (
+      {productData.map(product => (
         <RetailItem
           key={product.id}
           currentItemId={product.id}

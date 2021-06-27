@@ -20,6 +20,9 @@ const useStyles = makeStyles(theme => ({
 
 export const index = props => {
   const classes = useStyles();
+  const retailers = ['Amazon', 'eBay', 'Target'];
+  const retailerLogos = [<AmazonLogo />, <EbayLogo />, <TargetLogo />];
+  const fakeData = [fakeAmazonData, fakeEbayData, fakeTargetData];
 
   return (
     <Grid
@@ -28,23 +31,15 @@ export const index = props => {
       direction="column"
       justify="center"
       alignContent="center">
-      <Search />
+      <Search retailers={retailers} retailerLogos={retailerLogos} />
       <Grid container direction="row" justify="center" alignContent="center">
-        <RetailList
-          retailer="ebay"
-          logo={<EbayLogo />}
-          productData={fakeEbayData}
-        />
-        <RetailList
-          retailer="amazon"
-          logo={<AmazonLogo />}
-          productData={fakeAmazonData}
-        />
-        <RetailList
-          retailer="target"
-          logo={<TargetLogo />}
-          productData={fakeTargetData}
-        />
+        {retailers.map((retailer, index) => (
+          <RetailList
+            retailer={retailer.toLowerCase()}
+            logo={retailerLogos[index]}
+            productData={fakeData[index]}
+          />
+        ))}
       </Grid>
     </Grid>
   );

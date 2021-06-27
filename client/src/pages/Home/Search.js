@@ -16,9 +16,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
-import AmazonLogo from '../../components/logos/AmazonLogo';
-import EbayLogo from '../../components/logos/EbayLogo';
-import WalmartLogo from '../../components/logos/WalmartLogo';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,18 +53,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Search() {
+function Search({ retailers, retailerLogos }) {
   const classes = useStyles();
   const [checked, setChecked] = useState([0, 1, 2]);
-  const [retailers, setRetailers] = useState([]);
+  const [chosenRetailers, setChosenRetailers] = useState([]);
   const [userInput, setUserInput] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
   const [placeholder, setPlaceholder] = useState('');
-  const retailArray = ['Amazon', 'eBay', 'Walmart'];
-  const retailLogoArray = [<AmazonLogo />, <EbayLogo />, <WalmartLogo />];
+
 
   useEffect(() => {
-    setRetailers(checked.map(value => retailArray[value]));
+    setChosenRetailers(checked.map(value => retailers[value]));
   }, [checked]);
 
   const handleChecks = value => () => {
@@ -85,7 +81,7 @@ function Search() {
     isExpanded && handleToggleAccordianExpansion();
     const uriEncodedInput = encodeURI(userInput);
     if (userInput.length === 0) setPlaceholder('Search for an item')
-    else console.log({ uriEncodedInput, retailers }); // api call here
+    else console.log({ uriEncodedInput, chosenRetailers }); // api call here
   };
 
   return (
@@ -135,10 +131,10 @@ function Search() {
                       inputProps={{ 'aria-labelledby': labelId }}
                     />
                   </ListItemIcon>
-                  <ListItemText id={labelId} primary={retailArray[value]} />
+                  <ListItemText id={labelId} primary={retailers[value]} />
                   <ListItemSecondaryAction>
                     <Avatar variant="square" className={classes.retailAvatar}>
-                      {retailLogoArray[value]}
+                      {retailerLogos[value]}
                     </Avatar>
                   </ListItemSecondaryAction>
                 </ListItem>
