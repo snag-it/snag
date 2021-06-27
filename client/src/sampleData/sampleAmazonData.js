@@ -1,4 +1,4 @@
-export const fakeAmazonData = [
+export const sampleAmazonData = [
   {
     id: 'amazon0',
     title:

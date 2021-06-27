@@ -1,4 +1,4 @@
-export const fakeTargetData = [
+export const sampleTargetData = [
   {
     id: 'target0',
     title:

@@ -1,4 +1,4 @@
-export const fakeEbayData = [
+export const sampleEbayData = [
   {
     id: 'ebay0',
     title: '',
