@@ -4,25 +4,21 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import RetailList from '../../components/RetailList';
 import Search from './Search';
-import AmazonLogo from '../../components/logos/AmazonLogo';
-import EbayLogo from '../../components/logos/EbayLogo';
-import TargetLogo from '../../components/logos/TargetLogo';
+import AmazonLogo from '../../components/logos/AmazonLogo'
+import EbayLogo from '../../components/logos/EbayLogo'
+import TargetLogo from '../../components/logos/TargetLogo'
 
-// This should come from store state.
-import { fakeAmazonData } from '../../fakeData/fakeAmazonData';
-import { fakeEbayData } from '../../fakeData/fakeEbayData';
-import { fakeTargetData } from '../../fakeData/fakeTargetData';
 const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(10, 0),
   },
 }));
 
-export const index = props => {
+function HomePage({ amazonProducts, ebayProducts, targetProducts }) {
   const classes = useStyles();
   const retailers = ['Amazon', 'eBay', 'Target'];
   const retailerLogos = [<AmazonLogo />, <EbayLogo />, <TargetLogo />];
-  const fakeData = [fakeAmazonData, fakeEbayData, fakeTargetData];
+  const productData = [amazonProducts, ebayProducts, targetProducts];
 
   return (
     <Grid
@@ -35,18 +31,21 @@ export const index = props => {
       <Grid container direction="row" justify="center" alignContent="center">
         {retailers.map((retailer, index) => (
           <RetailList
+            key={`home-${retailer}-${index}`}
             retailer={retailer.toLowerCase()}
             logo={retailerLogos[index]}
-            productData={fakeData[index]}
+            productData={productData[index]}
           />
         ))}
       </Grid>
     </Grid>
   );
-};
+}
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  amazonProducts: state.products.amazonProducts,
+  ebayProducts: state.products.ebayProducts,
+  targetProducts: state.products.targetProducts,
+});
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(index);
+export default connect(mapStateToProps, null)(HomePage);
