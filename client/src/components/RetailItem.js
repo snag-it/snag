@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
@@ -9,6 +11,8 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+
+import * as actionCreators from '../actions/actionCreators';
 
 import amazonPlaceholder from '../../public/img/amazonPlaceholder.png';
 import ebayPlaceholder from '../../public/img/ebayPlaceholder.png';
@@ -44,7 +48,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function RetailItem({
+function RetailItem({
+  addFavorite,
+  removeFavorite,
   currentItemId,
   retailer,
   title,
@@ -53,18 +59,23 @@ export default function RetailItem({
   logo,
 }) {
   const classes = useStyles();
-  const [isFavorited, setIsFavorited] = useState(false);
   const [placeholder, setPlaceholder] = useState(null);
+  const [isFavorited, setIsFavorited] = useState(false)
 
-  const handleFavoriteToggle = () => {
-    setIsFavorited(!isFavorited);
-  };
+  const handleFavoriteToggle = event => setIsFavorited(!isFavorited);
+
   useEffect(() => {
     retailer === 'ebay' && setPlaceholder(ebayPlaceholder);
     retailer === 'amazon' && setPlaceholder(amazonPlaceholder);
     retailer === 'target' && setPlaceholder(targetPlaceholder);
   }, []);
-  console.log('currentItemId', currentItemId);
+
+  useEffect(() => {
+    isFavorited
+      ? addFavorite({ id: currentItemId, retailer, title, price, image, logo })
+      : removeFavorite(currentItemId)
+  }, [isFavorited])
+
   return (
     <li className={classes.li}>
       <Card className={classes.root} elevation={2}>
@@ -80,6 +91,7 @@ export default function RetailItem({
           }
           action={
             <IconButton
+              value={currentItemId}
               onClick={handleFavoriteToggle}
               aria-label="add to favorites">
               {isFavorited ? (
@@ -116,3 +128,14 @@ export default function RetailItem({
     </li>
   );
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      addFavorite: actionCreators.addFavorite,
+      removeFavorite: actionCreators.removeFavorite,
+    },
+    dispatch
+  );
+
+export default connect(null, mapDispatchToProps)(RetailItem);
