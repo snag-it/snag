@@ -42,6 +42,22 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true,
+              disable: true,
+              webp: {
+                quality: 75,
+              },
+            },
+          },
+        ],
+      },
+      {
         test: /\.js$/,
         enforce: 'pre',
         use: ['source-map-loader'],
