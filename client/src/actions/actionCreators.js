@@ -15,6 +15,16 @@ export const fetchTarget = products => ({
   payload: { products },
 });
 
+export const markFavorite = (retailer, productId) => ({
+  type: actions.MARK_FAVORITE,
+  payload: { retailer, productId },
+});
+
+export const unmarkFavorite = (retailer, productId) => ({
+  type: actions.UNMARK_FAVORITE,
+  payload: { retailer, productId },
+});
+
 export const addFavorite = item => ({
   type: actions.ADD_FAVORITE,
   payload: { item },
