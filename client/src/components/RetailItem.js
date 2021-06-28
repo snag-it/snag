@@ -47,6 +47,8 @@ const useStyles = makeStyles(theme => ({
 function RetailItem({
   addFavorite,
   removeFavorite,
+  markFavorite,
+  unmarkFavorite,
   currentItemId,
   retailer,
   title,
@@ -56,34 +58,21 @@ function RetailItem({
 }) {
   const classes = useStyles();
   const [placeholder, setPlaceholder] = useState(null);
-  const [isFavorited, setIsFavorited] = useState(false)
-  const [clickFlag, setClickFlag] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const handleFavoriteToggle = event => {
-    setClickFlag(true)
-    setIsFavorited(!isFavorited);
-  }
-
-  const handleAddFavorite = () => {
-    addFavorite({ id: currentItemId, retailer, title, price, image, logo })
-  }
-  const handleRemoveFavorite = () => {
-    if (clickFlag) removeFavorite(currentItemId)
-    setClickFlag(false)
-  }
+  const handleFavoriteToggle = () => {
+    setIsFavorite(!isFavorite);
+    isFavorite
+      ? unmarkFavorite(retailer, currentItemId) && removeFavorite(currentItemId)
+      : markFavorite(retailer, currentItemId) &&
+        addFavorite({ id: currentItemId, retailer, title, price, image, logo });
+  };
 
   useEffect(() => {
     retailer === 'ebay' && setPlaceholder(ebayPlaceholder);
     retailer === 'amazon' && setPlaceholder(amazonPlaceholder);
     retailer === 'target' && setPlaceholder(targetPlaceholder);
-
   }, []);
-
-  useEffect(() => {
-    isFavorited
-      ? handleAddFavorite()
-      : handleRemoveFavorite()
-  }, [isFavorited])
 
   return (
     <li className={classes.li}>
@@ -103,9 +92,10 @@ function RetailItem({
               value={currentItemId}
               onClick={handleFavoriteToggle}
               aria-label="add to favorites">
-              {isFavorited ? (
+              {isFavorite && (
                 <FavoriteIcon className={classes.isFavoriteFilled} />
-              ) : (
+              )}
+              {!isFavorite && (
                 <FavoriteBorderIcon className={classes.favoriteIconSize} />
               )}
             </IconButton>

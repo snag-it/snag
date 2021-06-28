@@ -1,7 +1,7 @@
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
 
 import * as actionCreators from '../actions/actionCreators';
 import RetailItem from './RetailItem';
@@ -18,6 +18,8 @@ function RetailList({
   productData,
   addFavorite,
   removeFavorite,
+  markFavorite,
+  unmarkFavorite,
 }) {
   const classes = useStyles();
   return (
@@ -33,6 +35,8 @@ function RetailList({
           logo={logo}
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
+          markFavorite={markFavorite}
+          unmarkFavorite={unmarkFavorite}
         />
       ))}
     </ul>
@@ -44,6 +48,8 @@ const mapDispatchToProps = dispatch =>
     {
       addFavorite: actionCreators.addFavorite,
       removeFavorite: actionCreators.removeFavorite,
+      markFavorite: actionCreators.markFavorite,
+      unmarkFavorite: actionCreators.unmarkFavorite,
     },
     dispatch
   );
