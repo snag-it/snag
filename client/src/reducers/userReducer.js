@@ -20,7 +20,7 @@ function userReducer(state = initialState, { type, payload }) {
       withAddedFavorite.push(payload.item)
       return {
         ...state,
-        favorites: withAddedFavorite
+        favorites: [...withAddedFavorite]
       };
     case actions.REMOVE_FAVORITE:
       const withFavoriteRemoved = []
@@ -29,7 +29,7 @@ function userReducer(state = initialState, { type, payload }) {
       })
       return {
         ...state,
-        favorites: withFavoriteRemoved
+        favorites: [...withFavoriteRemoved]
       };
     default:
       return state;
