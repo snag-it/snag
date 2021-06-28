@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -16,6 +18,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
+
+import * as actionCreators from '../../actions/actionCreators';
+import { sampleAmazonData } from '../../sampleData/sampleAmazonData'
+import { sampleEbayData } from '../../sampleData/sampleEbayData'
+import { sampleTargetData } from '../../sampleData/sampleTargetData'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,14 +60,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Search({ retailers, retailerLogos }) {
+function Search({
+  retailers,
+  retailerLogos,
+  fetchAmazon,
+  fetchEbay,
+  fetchTarget,
+}) {
   const classes = useStyles();
   const [checked, setChecked] = useState([0, 1, 2]);
   const [chosenRetailers, setChosenRetailers] = useState([]);
   const [userInput, setUserInput] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
   const [placeholder, setPlaceholder] = useState('');
-
 
   useEffect(() => {
     setChosenRetailers(checked.map(value => retailers[value]));
@@ -80,8 +92,12 @@ function Search({ retailers, retailerLogos }) {
   const handleSearchSubmit = () => {
     isExpanded && handleToggleAccordianExpansion();
     const uriEncodedInput = encodeURI(userInput);
-    if (userInput.length === 0) setPlaceholder('Search for an item')
-    else console.log({ uriEncodedInput, chosenRetailers }); // api call here
+    if (userInput.length === 0) setPlaceholder('Search for an item');
+    else {
+      fetchAmazon(sampleAmazonData)
+      fetchEbay(sampleEbayData)
+      fetchTarget(sampleTargetData)
+    }; // Promise.all() here
   };
 
   return (
@@ -154,4 +170,14 @@ function Search({ retailers, retailerLogos }) {
   );
 }
 
-export default Search;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchAmazon: actionCreators.fetchAmazon,
+      fetchEbay: actionCreators.fetchEbay,
+      fetchTarget: actionCreators.fetchTarget,
+    },
+    dispatch
+  );
+
+export default connect(null, mapDispatchToProps)(Search);
