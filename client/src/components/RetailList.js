@@ -1,5 +1,9 @@
-import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+
+import * as actionCreators from '../actions/actionCreators';
 import RetailItem from './RetailItem';
 
 const useStyles = makeStyles(theme => ({
@@ -8,7 +12,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function RetailList({ retailer, logo, productData }) {
+function RetailList({
+  retailer,
+  logo,
+  productData,
+  addFavorite,
+  removeFavorite,
+}) {
   const classes = useStyles();
   return (
     <ul className={classes.root}>
@@ -16,15 +26,26 @@ function RetailList({ retailer, logo, productData }) {
         <RetailItem
           key={product.id}
           currentItemId={product.id}
-          retailer={retailer}
           title={product.title}
           price={product.price}
           image={product.img}
+          retailer={retailer}
           logo={logo}
+          addFavorite={addFavorite}
+          removeFavorite={removeFavorite}
         />
       ))}
     </ul>
   );
 }
 
-export default RetailList;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      addFavorite: actionCreators.addFavorite,
+      removeFavorite: actionCreators.removeFavorite,
+    },
+    dispatch
+  );
+
+export default connect(null, mapDispatchToProps)(RetailList);

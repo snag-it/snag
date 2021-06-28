@@ -1,14 +1,22 @@
-import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+
+import * as actionCreators from '../actions/actionCreators';
 import RetailItem from './RetailItem';
 
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: theme.spacing(10),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 }));
 
-function FavoritesList({ productData }) {
+function FavoritesList({ productData, addFavorite, removeFavorite }) {
   const classes = useStyles();
   return (
     <ul className={classes.root}>
@@ -19,13 +27,23 @@ function FavoritesList({ productData }) {
           retailer={product.retailer}
           title={product.title}
           price={product.price}
-          image={product.img}
+          image={product.image}
           logo={product.logo}
-          setFavorited={setFavorited}
+          addFavorite={addFavorite}
+          removeFavorite={removeFavorite}
         />
       ))}
     </ul>
   );
 }
 
-export default FavoritesList;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      addFavorite: actionCreators.addFavorite,
+      removeFavorite: actionCreators.removeFavorite,
+    },
+    dispatch
+  );
+
+export default connect(null, mapDispatchToProps)(FavoritesList);

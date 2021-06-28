@@ -12,19 +12,8 @@ const useStyles = makeStyles(theme => ({
 
 function FavoritesPage({ favorites }) {
   const classes = useStyles();
-  console.log(`favorites`, favorites)
-  return (
-    <Grid
-      container
-      className={classes.root}
-      direction="row"
-      justify="center"
-      alignContent="center">
-      <Grid container direction="row" justify="center" alignContent="center">
-        <FavoritesList productData={favorites} />
-      </Grid>
-    </Grid>
-  );
+  console.log(`favorites`, favorites);
+  return <FavoritesList productData={favorites} />;
 }
 
 const mapStateToProps = state => ({
