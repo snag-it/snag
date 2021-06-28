@@ -43,9 +43,9 @@ function HomePage({ amazonProducts, ebayProducts, targetProducts }) {
 }
 
 const mapStateToProps = state => ({
-  amazonProducts: state.products.amazonProducts,
-  ebayProducts: state.products.ebayProducts,
-  targetProducts: state.products.targetProducts,
+  amazonProducts: state.amazon.amazonProducts,
+  ebayProducts: state.ebay.ebayProducts,
+  targetProducts: state.target.targetProducts,
 });
 
 export default connect(mapStateToProps, null)(HomePage);

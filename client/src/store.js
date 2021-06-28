@@ -1,12 +1,17 @@
 import { combineReducers, applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk'
+
+import amazonReducer from './reducers/amazonReducer';
+import ebayReducer from './reducers/ebayReducer';
+import targetReducer from './reducers/targetReducer';
 import userReducer from './reducers/userReducer';
-import productsReducer from './reducers/productsReducer';
 
 //ADD REDUCERS HERE
 const rootReducer = combineReducers({
-  products: productsReducer,
-  user: userReducer
+  amazon: amazonReducer,
+  ebay: ebayReducer,
+  target: targetReducer,
+  user: userReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
