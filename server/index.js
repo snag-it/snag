@@ -1,11 +1,13 @@
-import express from 'express'
-import cors from 'cors'
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
 
-const PORT = 3001
-const app = express()
+PORT = 3001;
+const app = express();
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // WEBPACK DEV SERVER
 app.use('/build', express.static(path.resolve(__dirname, '../client/build')));
@@ -14,6 +16,17 @@ app.get('/', (req, res) => {
     .status(200)
     .sendFile(path.join(__dirname, '../client/public/index.html'));
 });
+
+// sending request send a post request to '/getPrices'
+// object off of req.body
+// sending a post request for logins to '/login'
+// username, password
+// add in ssid cookie middleware
+// sending a post request for signups to '/signup'
+// first name, last name, email, username, password
+// add in ssid cookie middleware
+
+// send a get request to '/getUserData' after login to send back history of purchases
 
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
@@ -27,4 +40,6 @@ app.use((err, req, res, next) => {
   res.status(400).send(errObj.error);
 });
 
-app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+module.exports = app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
