@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// const SALT_WORK_FACTOR = 10;
-// const bcrypt = require('bcryptjs');
+const SALT_WORK_FACTOR = 10;
+const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
@@ -10,18 +10,45 @@ const userSchema = new Schema({
   firstname: String,
   lastname: String,
   email: String,
-  //   history:
-  //   favorites:
-
-  //add in favorites or history here
-  //favorites:
-  //id
-  //retailer
-  //title
-  //price
-  //imgurl
+  favorites: [
+    {
+      id: { type: String },
+      title: { type: String },
+      retailer: { type: String },
+      price: { type: Number },
+      imgSrc: { type: String },
+      link: { type: String },
+    },
+  ],
+  history: [
+    {
+      searchedItem: { type: String },
+      createdAt: { type: Date, expires: 600, default: Date.now },
+      results: [
+        {
+          id: { type: String },
+          retailer: { type: String },
+          price: { type: Number },
+          imgSrc: { type: String },
+          link: { type: String },
+        },
+      ],
+    },
+  ],
 });
 
-//ask if we need any encryption and password comparison here
+userSchema.pre('save', function (next) {
+  const user = this;
+  bcrypt.hash(user.password, SALT_WORK_FACTOR, function (err, hash) {
+    if (err) console.log(err);
+    user.password = hash;
+    return next();
+  });
+});
 
-module.exports = mongoose.model("User", userSchema);
+userSchema.methods.comparePassword = function (potentialPass) {
+  const user = this;
+  return bcrypt.compare(potentialPass, user.password);
+};
+
+module.exports = mongoose.model('User', userSchema);
