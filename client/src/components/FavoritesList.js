@@ -1,26 +1,32 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect } from "react";
 
-import * as actionCreators from '../actions/actionCreators';
-import RetailItem from './RetailItem';
+import * as actionCreators from "../actions/actionCreators";
+import RetailItem from "./RetailItem";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(10),
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 
 function FavoritesList({ productData, addFavorite, removeFavorite }) {
   const classes = useStyles();
+
+  useEffect(() => {
+    console.log("fetching favs...");
+    actionCreators.fetchFavorites();
+  });
+
   return (
     <ul className={classes.root}>
-      {productData.map(product => (
+      {productData.map((product) => (
         <RetailItem
           key={product.id}
           currentItemId={product.id}
@@ -37,11 +43,12 @@ function FavoritesList({ productData, addFavorite, removeFavorite }) {
   );
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       addFavorite: actionCreators.addFavorite,
       removeFavorite: actionCreators.removeFavorite,
+      fetchFavorites: actionCreators.fetchFavorites,
     },
     dispatch
   );

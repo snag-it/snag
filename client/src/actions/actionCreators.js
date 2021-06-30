@@ -1,16 +1,17 @@
-import * as actions from './actions';
+import * as actions from "./actions";
+import axios from "axios";
 
-export const fetchAmazon = products => ({
+export const fetchAmazon = (products) => ({
   type: actions.FETCH_AMAZON,
   payload: { products },
 });
 
-export const fetchEbay = products => ({
+export const fetchEbay = (products) => ({
   type: actions.FETCH_EBAY,
   payload: { products },
 });
 
-export const fetchTarget = products => ({
+export const fetchTarget = (products) => ({
   type: actions.FETCH_TARGET,
   payload: { products },
 });
@@ -25,17 +26,34 @@ export const unmarkFavorite = (retailer, productId) => ({
   payload: { retailer, productId },
 });
 
-export const addFavorite = item => ({
+export const addFavorite = (item) => ({
   type: actions.ADD_FAVORITE,
   payload: { item },
 });
 
-export const removeFavorite = itemId => ({
+export const removeFavorite = (itemId) => ({
   type: actions.REMOVE_FAVORITE,
   payload: { itemId },
 });
 
-export const signIn = loggedInUser => ({
+//post favorite
+
+export const postFavorite = (itemId) => ({
+  type: actions.POST_FAVORITE,
+  payload: { itemId },
+});
+
+//fetch favorite
+
+export function fetchFavorites() {
+  return function (dispatch) {
+    return axios.get("/getFavorites").then(({ data }) => {
+      dispatch(setFavorites(data));
+    });
+  };
+}
+
+export const signIn = (loggedInUser) => ({
   type: actions.SIGN_IN,
   payload: { loggedInUser },
 });
