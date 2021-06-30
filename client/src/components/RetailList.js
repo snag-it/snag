@@ -1,12 +1,12 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 
-import * as actionCreators from '../actions/actionCreators';
-import RetailItem from './RetailItem';
+import * as actionCreators from "../actions/actionCreators";
+import RetailItem from "./RetailItem";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(10),
   },
@@ -24,13 +24,14 @@ function RetailList({
   const classes = useStyles();
   return (
     <ul className={classes.root}>
-      {productData.map(product => (
+      {productData.map((product) => (
         <RetailItem
           key={product.id}
           currentItemId={product.id}
           title={product.title}
           price={product.price}
-          image={product.img}
+          image={product.imgSrc}
+          link={product.link}
           retailer={retailer}
           logo={logo}
           addFavorite={addFavorite}
@@ -43,7 +44,7 @@ function RetailList({
   );
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       addFavorite: actionCreators.addFavorite,

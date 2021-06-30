@@ -1,46 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
-import amazonPlaceholder from '../../public/img/amazonPlaceholder.png';
-import ebayPlaceholder from '../../public/img/ebayPlaceholder.png';
-import targetPlaceholder from '../../public/img/targetPlaceholder.png';
+import amazonPlaceholder from "../../public/img/amazonPlaceholder.png";
+import ebayPlaceholder from "../../public/img/ebayPlaceholder.png";
+import targetPlaceholder from "../../public/img/targetPlaceholder.png";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: 345,
     margin: theme.spacing(2),
   },
   li: {
-    listStyle: 'none',
+    listStyle: "none",
   },
   cardHeader: {
-    height: '130px',
+    height: "130px",
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%", // 16:9
   },
   price: {
-    textAlign: 'center',
+    textAlign: "left",
+  },
+  link: {
+    textAlign: "right",
   },
   favoriteIconSize: {
-    fontSize: '30px',
+    fontSize: "30px",
   },
   isFavoriteFilled: {
-    fontSize: '30px',
+    fontSize: "30px",
     color: theme.palette.secondary.light,
   },
   retailAvatar: {
-    backgroundColor: '#00000000',
+    backgroundColor: "#00000000",
   },
 }));
 
@@ -54,6 +58,7 @@ function RetailItem({
   title,
   price,
   image,
+  link,
   logo,
 }) {
   const classes = useStyles();
@@ -65,13 +70,21 @@ function RetailItem({
     isFavorite
       ? unmarkFavorite(retailer, currentItemId) && removeFavorite(currentItemId)
       : markFavorite(retailer, currentItemId) &&
-        addFavorite({ id: currentItemId, retailer, title, price, image, logo });
+        addFavorite({
+          id: currentItemId,
+          retailer,
+          title,
+          price,
+          link,
+          image,
+          logo,
+        });
   };
 
   useEffect(() => {
-    retailer === 'ebay' && setPlaceholder(ebayPlaceholder);
-    retailer === 'amazon' && setPlaceholder(amazonPlaceholder);
-    retailer === 'target' && setPlaceholder(targetPlaceholder);
+    retailer === "ebay" && setPlaceholder(ebayPlaceholder);
+    retailer === "amazon" && setPlaceholder(amazonPlaceholder);
+    retailer === "target" && setPlaceholder(targetPlaceholder);
   }, []);
 
   return (
@@ -83,7 +96,8 @@ function RetailItem({
             <Avatar
               variant="square"
               aria-label="retailer-logo"
-              className={classes.retailAvatar}>
+              className={classes.retailAvatar}
+            >
               {logo}
             </Avatar>
           }
@@ -91,7 +105,8 @@ function RetailItem({
             <IconButton
               value={currentItemId}
               onClick={handleFavoriteToggle}
-              aria-label="add to favorites">
+              aria-label="add to favorites"
+            >
               {isFavorite && (
                 <FavoriteIcon className={classes.isFavoriteFilled} />
               )}
@@ -102,14 +117,14 @@ function RetailItem({
           }
           title={
             <Typography variant="body1">
-              {title ? title : 'searchTerm'}
+              {title ? title : "searchTerm"}
             </Typography>
           }
         />
         <CardMedia
           className={classes.media}
           style={
-            !image ? { backgroundSize: 'contain', margin: '0px 16px' } : null
+            !image ? { backgroundSize: "contain", margin: "0px 16px" } : null
           }
           image={image ? image : placeholder}
           title={title}
@@ -119,9 +134,13 @@ function RetailItem({
             className={classes.price}
             variant="h3"
             color="textSecondary"
-            component="p">
+            component="p"
+          >
             {price}
           </Typography>
+          <Button variant="contained" color="primary" href={link}>
+            Go
+          </Button>
         </CardContent>
       </Card>
     </li>

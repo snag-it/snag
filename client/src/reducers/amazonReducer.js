@@ -1,4 +1,4 @@
-import * as actions from '../actions/actions';
+import * as actions from "../actions/actions";
 
 const initialState = {
   amazonLoading: false,
@@ -19,8 +19,10 @@ function amazonReducer(state = initialState, { type, payload }) {
       };
     case actions.FETCH_AMAZON:
       const modifiedAmazonList = [];
-      payload.products.forEach(product => {
-        product['isFavorite'] = false;
+      console.log(payload);
+      payload.arr.amazon.forEach((product) => {
+        product["isFavorite"] = false;
+
         modifiedAmazonList.push(product);
       });
       return {
@@ -28,11 +30,11 @@ function amazonReducer(state = initialState, { type, payload }) {
         amazonProducts: modifiedAmazonList,
       };
     case actions.MARK_FAVORITE:
-      if (payload.retailer === 'amazon') {
+      if (payload.retailer === "amazon") {
         const withMarkedFavorite = state.amazonProducts;
-        withMarkedFavorite.forEach(product => {
+        withMarkedFavorite.forEach((product) => {
           if (product.id === payload.productId) {
-            product['isFavorite'] = true;
+            product["isFavorite"] = true;
           }
         });
         return {
@@ -41,11 +43,11 @@ function amazonReducer(state = initialState, { type, payload }) {
         };
       }
     case actions.UNMARK_FAVORITE:
-      if (payload.retailer === 'amazon') {
+      if (payload.retailer === "amazon") {
         const withUnmarkedFavorite = state.amazonProducts;
-        withUnmarkedFavorite.forEach(product => {
+        withUnmarkedFavorite.forEach((product) => {
           if (product.id === payload.productId) {
-            product['isFavorite'] = false;
+            product["isFavorite"] = false;
           }
         });
         return {
