@@ -1,10 +1,25 @@
 import * as actions from "./actions";
 import axios from "axios";
 
-export const fetchAmazon = (products) => ({
-  type: actions.FETCH_AMAZON,
-  payload: { products },
-});
+export function fetchAmazon(item) {
+  return function (dispatch) {
+    return axios
+      .post("/getPrices", {
+        item,
+      })
+      .then(({ data }) => {
+        //set data somewhere
+        dispatch(setAmazonProducts(data));
+        console.log(data);
+      })
+      .then(() => fetchFavorites())
+      .catch((err) => console.log(err));
+  };
+}
+
+export function setAmazonProducts(arr) {
+  return { type: actions.FETCH_AMAZON, payload: { arr } };
+}
 
 export const fetchEbay = (products) => ({
   type: actions.FETCH_EBAY,
@@ -53,12 +68,16 @@ export function postFavorite(itemId) {
 //fetch favorite
 
 export function fetchFavorites() {
+  console.log("getting data");
   return function (dispatch) {
     return axios.get("/getFavorites").then(({ data }) => {
+      console.log("58 ", data);
       dispatch(setFavorites(data));
     });
   };
 }
+
+//export function fetchHomeItems()
 
 export const signIn = (loggedInUser) => ({
   type: actions.SIGN_IN,

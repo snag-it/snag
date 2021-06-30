@@ -4,6 +4,7 @@ export const FETCH_COMPLETE = "FETCH_COMPLETE";
 export const FETCH_AMAZON = "FETCH_AMAZON";
 export const FETCH_EBAY = "FETCH_EBAY";
 export const FETCH_TARGET = "FETCH_TARGET";
+
 export const MARK_FAVORITE = "MARK_FAVORITE";
 export const UNMARK_FAVORITE = "UNMARK_FAVORITE";
 //post favorites to backend

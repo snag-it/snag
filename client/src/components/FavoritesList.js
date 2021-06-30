@@ -16,15 +16,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function FavoritesList({ productData, addFavorite, removeFavorite }) {
+function FavoritesList({
+  productData,
+  addFavorite,
+  removeFavorite,
+  fetchFavorites,
+}) {
   const classes = useStyles();
 
-  const [favorites, setFavorites] = useState([]);
+  // const [favorites, setFavorites] = useState([]);
 
-  useEffect(() => {
-    console.log("fetching favs...");
-    actionCreators.fetchFavorites();
-  }, [favorites]);
+  // useEffect(() => {
+  //   console.log("fetching favs...");
+  //   actionCreators.fetchFavorites();
+  // }, [favorites]);
 
   return (
     <ul className={classes.root}>
@@ -39,7 +44,7 @@ function FavoritesList({ productData, addFavorite, removeFavorite }) {
           logo={product.logo}
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
-          //fetchFavorites={fetchFavorites}
+          fetchFavorites={fetchFavorites}
         />
       ))}
     </ul>

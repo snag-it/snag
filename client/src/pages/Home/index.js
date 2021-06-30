@@ -1,14 +1,16 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import RetailList from '../../components/RetailList';
-import Search from './Search';
-import AmazonLogo from '../../components/logos/AmazonLogo'
-import EbayLogo from '../../components/logos/EbayLogo'
-import TargetLogo from '../../components/logos/TargetLogo'
+import React from "react";
+import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import RetailList from "../../components/RetailList";
+import Search from "./Search";
+import AmazonLogo from "../../components/logos/AmazonLogo";
+import EbayLogo from "../../components/logos/EbayLogo";
+import TargetLogo from "../../components/logos/TargetLogo";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(10, 0),
   },
@@ -16,9 +18,18 @@ const useStyles = makeStyles(theme => ({
 
 function HomePage({ amazonProducts, ebayProducts, targetProducts }) {
   const classes = useStyles();
-  const retailers = ['Amazon', 'eBay', 'Target'];
+  const retailers = ["Amazon", "eBay", "Target"];
   const retailerLogos = [<AmazonLogo />, <EbayLogo />, <TargetLogo />];
   const productData = [amazonProducts, ebayProducts, targetProducts];
+
+  // useEffect(() => {
+  //   axios
+  //     .get("/")
+  //     .then((data) => {
+  //       console.log(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <Grid
@@ -26,7 +37,8 @@ function HomePage({ amazonProducts, ebayProducts, targetProducts }) {
       className={classes.root}
       direction="column"
       justify="center"
-      alignContent="center">
+      alignContent="center"
+    >
       <Search retailers={retailers} retailerLogos={retailerLogos} />
       <Grid container direction="row" justify="center" alignContent="center">
         {retailers.map((retailer, index) => (
@@ -42,7 +54,7 @@ function HomePage({ amazonProducts, ebayProducts, targetProducts }) {
   );
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   amazonProducts: state.amazon.amazonProducts,
   ebayProducts: state.ebay.ebayProducts,
   targetProducts: state.target.targetProducts,
