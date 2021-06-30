@@ -8,6 +8,7 @@ import AmazonLogo from '../../components/logos/AmazonLogo'
 import EbayLogo from '../../components/logos/EbayLogo'
 import TargetLogo from '../../components/logos/TargetLogo'
 
+
 const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(10, 0),
@@ -28,6 +29,7 @@ function HomePage({ amazonProducts, ebayProducts, targetProducts }) {
       justify="center"
       alignContent="center">
       <Search retailers={retailers} retailerLogos={retailerLogos} />
+    
       <Grid container direction="row" justify="center" alignContent="center">
         {retailers.map((retailer, index) => (
           <RetailList

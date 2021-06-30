@@ -23,6 +23,7 @@ import * as actionCreators from '../../actions/actionCreators';
 import { sampleAmazonData } from '../../sampleData/sampleAmazonData'
 import { sampleEbayData } from '../../sampleData/sampleEbayData'
 import { sampleTargetData } from '../../sampleData/sampleTargetData'
+import NavBar from '../../components/NavBar'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -101,6 +102,8 @@ function Search({
   };
 
   return (
+    <div>
+    <NavBar />
     <Grid container direction="row" justify="center">
       <Accordion
         className={classes.root}
@@ -167,6 +170,7 @@ function Search({
         submit
       </Button>
     </Grid>
+    </div>
   );
 }
 

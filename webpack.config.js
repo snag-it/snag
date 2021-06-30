@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { DeveloperBoard } = require('@material-ui/icons');
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -42,7 +43,7 @@ module.exports = {
         },
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.[sac]ss$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
