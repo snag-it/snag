@@ -19,10 +19,11 @@ import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 
-import * as actionCreators from "../../actions/actionCreators";
-import { sampleAmazonData } from "../../sampleData/sampleAmazonData";
-import { sampleEbayData } from "../../sampleData/sampleEbayData";
-import { sampleTargetData } from "../../sampleData/sampleTargetData";
+import * as actionCreators from '../../actions/actionCreators';
+import { sampleAmazonData } from '../../sampleData/sampleAmazonData'
+import { sampleEbayData } from '../../sampleData/sampleEbayData'
+import { sampleTargetData } from '../../sampleData/sampleTargetData'
+import NavBar from '../../components/NavBar'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,6 +103,8 @@ function Search({
   };
 
   return (
+    <div>
+    <NavBar />
     <Grid container direction="row" justify="center">
       <Accordion
         className={classes.root}
@@ -172,6 +175,7 @@ function Search({
         submit
       </Button>
     </Grid>
+    </div>
   );
 }
 

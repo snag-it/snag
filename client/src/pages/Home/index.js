@@ -10,6 +10,7 @@ import TargetLogo from "../../components/logos/TargetLogo";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(10, 0),
@@ -40,6 +41,7 @@ function HomePage({ amazonProducts, ebayProducts, targetProducts }) {
       alignContent="center"
     >
       <Search retailers={retailers} retailerLogos={retailerLogos} />
+    
       <Grid container direction="row" justify="center" alignContent="center">
         {retailers.map((retailer, index) => (
           <RetailList
