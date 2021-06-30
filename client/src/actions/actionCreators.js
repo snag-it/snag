@@ -38,10 +38,17 @@ export const removeFavorite = (itemId) => ({
 
 //post favorite
 
-export const postFavorite = (itemId) => ({
-  type: actions.POST_FAVORITE,
-  payload: { itemId },
-});
+export function postFavorite(itemId) {
+  console.log("posting favs...");
+  return function () {
+    return axios
+      .post("/postFavorites", { favorite })
+      .then(({ res }) => {
+        console.log(res, res.data);
+      })
+      .then(() => fetchFavorites());
+  };
+}
 
 //fetch favorite
 
