@@ -75,7 +75,6 @@ amazonController.getAmazon = (req, res, next) => {
         }
 
         dom.window.document.querySelectorAll(".s-image").forEach((link) => {
-          //console.log(link.src, "count ", imageCount);
           imgArr.push(link.src);
         });
 
@@ -95,6 +94,7 @@ amazonController.getAmazon = (req, res, next) => {
           priceArr[i] = priceArr[i].replace(",", "");
           let totalsObj = {
             id: "amazon" + [i],
+            retailer: "Amazon",
             title: titleArr[i],
             price: `$${priceArr[i]}`,
             imgSrc: imgArr[i],
