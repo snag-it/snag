@@ -22,6 +22,7 @@ function amazonReducer(state = initialState, { type, payload }) {
       console.log(payload);
       payload.arr.amazon.forEach((product) => {
         product["isFavorite"] = false;
+
         modifiedAmazonList.push(product);
       });
       return {

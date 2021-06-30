@@ -1,4 +1,4 @@
-import * as actions from '../actions/actions';
+import * as actions from "../actions/actions";
 
 const initialState = {
   ebayLoading: false,
@@ -19,8 +19,8 @@ function ebayReducer(state = initialState, { type, payload }) {
       };
     case actions.FETCH_EBAY:
       const modifiedEbayList = [];
-      payload.products.forEach(product => {
-        product['isFavorite'] = false;
+      payload.arr.ebay.forEach((product) => {
+        product["isFavorite"] = false;
         modifiedEbayList.push(product);
       });
       return {
@@ -28,11 +28,11 @@ function ebayReducer(state = initialState, { type, payload }) {
         ebayProducts: modifiedEbayList,
       };
     case actions.MARK_FAVORITE:
-      if (payload.retailer === 'ebay') {
+      if (payload.retailer === "ebay") {
         const withMarkedFavorite = state.ebayProducts;
-        withMarkedFavorite.forEach(product => {
+        withMarkedFavorite.forEach((product) => {
           if (product.id === payload.productId) {
-            product['isFavorite'] = true;
+            product["isFavorite"] = true;
           }
         });
         return {
@@ -41,11 +41,11 @@ function ebayReducer(state = initialState, { type, payload }) {
         };
       }
     case actions.UNMARK_FAVORITE:
-      if (payload.retailer === 'ebay') {
+      if (payload.retailer === "ebay") {
         const withUnmarkedFavorite = state.ebayProducts;
-        withUnmarkedFavorite.forEach(product => {
+        withUnmarkedFavorite.forEach((product) => {
           if (product.id === payload.productId) {
-            product['isFavorite'] = false;
+            product["isFavorite"] = false;
           }
         });
         return {

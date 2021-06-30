@@ -16,8 +16,8 @@ targetController.getTarget = (req, res, next) => {
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
       await preparePageForTests(page);
-      page.setDefaultTimeout(45000);
-      await page.goto(url, { waitUntil: "networkidle0" });
+      page.setDefaultTimeout(70000);
+      await page.goto(url);
 
       //await page.waitForSelector("img");
 
@@ -75,7 +75,7 @@ targetController.getTarget = (req, res, next) => {
       const removeStr2 = '<span class="BOLD">';
       const removeStr3 = "</span>";
 
-      for (let i = 0; i <= 10; i++) {
+      for (let i = 0; i < 10; i++) {
         //regexes to remove stray html that didn't get filtered out, might need adjustment
         const tester = new RegExp(removeStr, "g");
         const tester2 = new RegExp(removeStr2, "g");
@@ -96,7 +96,7 @@ targetController.getTarget = (req, res, next) => {
         let titlePriceObj = {
           id: "target" + [i],
           title: sItemTitle[i],
-          price: Number(sItemPrice[i]),
+          price: `$${sItemPrice[i]}`,
           imgSrc: image[i],
           link: linkArr[i],
           retailer: "Target",
@@ -124,7 +124,7 @@ targetController.getTarget = (req, res, next) => {
                 clearInterval(timer);
                 resolve();
               }
-            }, 100);
+            }, 50);
           });
         });
       }

@@ -96,8 +96,8 @@ function Search({
     else {
       //
       fetchAmazon(uriEncodedInput);
-      fetchEbay(sampleEbayData);
-      fetchTarget(sampleTargetData);
+      fetchEbay(uriEncodedInput);
+      fetchTarget(uriEncodedInput);
     } // Promise.all() here
   };
 

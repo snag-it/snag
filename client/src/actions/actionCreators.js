@@ -21,15 +21,49 @@ export function setAmazonProducts(arr) {
   return { type: actions.FETCH_AMAZON, payload: { arr } };
 }
 
-export const fetchEbay = (products) => ({
-  type: actions.FETCH_EBAY,
-  payload: { products },
-});
+//fetch ebay
 
-export const fetchTarget = (products) => ({
-  type: actions.FETCH_TARGET,
-  payload: { products },
-});
+export function fetchEbay(item) {
+  return function (dispatch) {
+    return axios
+      .post("/getPrices", {
+        item,
+      })
+      .then(({ data }) => {
+        //set data somewhere
+        dispatch(setEbayProducts(data));
+        console.log(data);
+      })
+      .then(() => fetchFavorites())
+      .catch((err) => console.log(err));
+  };
+}
+
+export function setEbayProducts(arr) {
+  return { type: actions.FETCH_EBAY, payload: { arr } };
+}
+
+//fetch target
+
+export function fetchTarget(item) {
+  return function (dispatch) {
+    return axios
+      .post("/getPrices", {
+        item,
+      })
+      .then(({ data }) => {
+        //set data somewhere
+        dispatch(setTargetProducts(data));
+        console.log(data);
+      })
+      .then(() => fetchFavorites())
+      .catch((err) => console.log(err));
+  };
+}
+
+export function setTargetProducts(arr) {
+  return { type: actions.FETCH_TARGET, payload: { arr } };
+}
 
 export const markFavorite = (retailer, productId) => ({
   type: actions.MARK_FAVORITE,
