@@ -154,7 +154,10 @@ userController.addHistory = async (req, res, next) => {
 userController.getHistoryData = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: '60dcd9ade4979317ae5a6c23' });
-    res.locals.history = user.history;
+    console.log(user.history);
+    let historyData = [];
+
+    res.locals.history = historyData;
     return next();
   } catch (err) {
     console.log(err);

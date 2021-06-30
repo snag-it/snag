@@ -22,9 +22,8 @@ const userSchema = new Schema({
   ],
   history: [
     {
-      searchedItem: { type: String },
-      expireAt: { type: Number },
-      results: { type: Object },
+      type: Schema.Types.ObjectId,
+      ref: 'history',
     },
   ],
 });
