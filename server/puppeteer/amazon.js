@@ -9,20 +9,20 @@ amazonController.getAmazon = (req, res, next) => {
   async function scrapeAmazon(url) {
     try {
       let browser;
-
+      const customArgs = [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-infobars',
+        '--disable-features=site-per-process',
+        '--window-position=0,0',
+        '--disable-extensions',
+        '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X   10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0    Safari/537.36"',
+      ];
       const output = [];
       // allowed to get past amazon bot catcher
       browser = await puppeteer.launch({
         headless: true,
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-infobars',
-          '--disable-features=site-per-process',
-          '--window-position=0,0',
-          '--disable-extensions',
-          '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X   10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0    Safari/537.36"',
-        ],
+        args: customArgs,
       });
       // probably not a necessary line
       const page = await browser.newPage();
@@ -47,11 +47,13 @@ amazonController.getAmazon = (req, res, next) => {
       const centsArr = [];
       // pushed item title into array
       let promise = new Promise((resolve, reject) => {
-        dom.window.document.querySelectorAll('.a-size-mini').forEach((link) => {
-          count += 1;
-          //console.log(link.textContent, "count ", count);
-          titleArr.push(link.textContent);
-        });
+        dom.window.document
+          .querySelectorAll('.a-size-mini.a-spacing-none.a-color-base')
+          .forEach((link) => {
+            count += 1;
+            //console.log(link.textContent, "count ", count);
+            titleArr.push(link.textContent);
+          });
 
         let priceCount = 0;
 
@@ -67,10 +69,10 @@ amazonController.getAmazon = (req, res, next) => {
           .forEach((decimal, i) => {
             centsArr.push(decimal.textContent);
           });
+
         for (let i = 0; i < dollarArr.length; i += 1) {
           priceArr.push(dollarArr[i] + centsArr[i]);
         }
-        let imageCount = 0;
 
         dom.window.document.querySelectorAll('.s-image').forEach((link) => {
           imageCount += 1;
@@ -79,10 +81,16 @@ amazonController.getAmazon = (req, res, next) => {
         });
 
         dom.window.document
-          .querySelectorAll('.a-link-normal')
+          .querySelectorAll('.a-link-normal.a-text-normal')
           .forEach((link) => {
             linkArr.push(link.href);
           });
+
+        newLinkArr = [];
+
+        for (let i = 0; i < linkArr.length; i += 2) {
+          newLinkArr.push(linkArr[i]);
+        }
         // for loop creates an object
         for (let i = 0; i < 10; i++) {
           priceArr[i] = priceArr[i].replace(',', '');
@@ -91,7 +99,7 @@ amazonController.getAmazon = (req, res, next) => {
             title: titleArr[i],
             price: Number(priceArr[i]),
             imgSrc: imgArr[i],
-            link: linkArr[i], // `https://www.amazon.com` + linkArr[i],
+            link: `https://www.amazon.com` + newLinkArr[i],
           };
           // array of objects
           output.push(totalsObj);
