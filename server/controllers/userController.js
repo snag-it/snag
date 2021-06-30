@@ -92,8 +92,34 @@ userController.removeFavorite = async (req, res, next) => {
 userController.getUserData = async (req, res, next) => {
   try {
     // get the user from the database from whoever just logged in
+    const user = await User.findOne({ _id: '60dc9dffef153f08f31274bf' });
+    // we want to send to frontend: username, email, favorites, and history
+    const userData = {
+      username: user.username,
+      email: user.email,
+      favorites: user.favorites,
+      history: user.history,
+    };
+    res.locals.userData = userData;
+    return next();
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+};
+
+userController.addHistory = async (req, res, next) => {
+  try {
     const user = await User.findOne({ _id: req.cookies.ssid });
-    // we want to send to frontend: username
+
+    const updatedHistory = [...user.history];
+    const newHistoryItem = {
+      searchedItem: req.body.item,
+      results: res.locals.scraped,
+    };
+    // item name: req.body.item
+
+    return next();
   } catch (err) {
     console.log(err);
     return next(err);

@@ -37,14 +37,26 @@ app.use('/public', express.static(path.resolve(__dirname, '../client/public')));
 
 app.use('/build', express.static(path.resolve(__dirname, '../client/build')));
 
-app.get('/getUserData', (req, res) => {
+app.get('/getUserData', userController.getUserData, (req, res) => {
   res.status(200).json(res.locals.userData);
 });
 
+app.get(
+  '/home',
+  // sessionController.isLoggedIn,
+  (req, res) => {
+    res
+      .status(200)
+      .sendFile(path.join(__dirname, '../client/public/index.html'));
+  }
+);
+
+app.get('/signup', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../client/public/index.html'));
+});
+
 app.get('/', (req, res) => {
-  return res
-    .status(200)
-    .sendFile(path.join(__dirname, '../client/public/index.html'));
+  res.status(200).sendFile(path.join(__dirname, '../client/public/index.html'));
 });
 
 // sending request send a post request to '/getPrices'
