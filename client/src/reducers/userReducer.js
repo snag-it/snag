@@ -1,8 +1,8 @@
-import * as actions from '../actions/actions';
+import * as actions from "../actions/actions";
 
 const initialState = {
-  username: '',
-  email: '',
+  username: "",
+  email: "",
   favorites: [],
 };
 
@@ -13,24 +13,32 @@ function userReducer(state = initialState, { type, payload }) {
         ...state,
         username: payload.loggedInUser.username,
         email: payload.loggedInUser.email,
-        favorites: [...payload.loggedInUser.favorites]
+        favorites: [...payload.loggedInUser.favorites],
       };
     case actions.ADD_FAVORITE:
-      const withAddedFavorite = state.favorites
-      withAddedFavorite.push(payload.item)
+      const withAddedFavorite = state.favorites;
+      withAddedFavorite.push(payload.item);
       return {
         ...state,
-        favorites: [...withAddedFavorite]
+        favorites: [...withAddedFavorite],
       };
     case actions.REMOVE_FAVORITE:
-      const withFavoriteRemoved = []
-      state.favorites.map(item => {
-        if (item.id !== payload.itemId) withFavoriteRemoved.push(item)
-      })
+      const withFavoriteRemoved = [];
+      state.favorites.map((item) => {
+        if (item.id !== payload.itemId) withFavoriteRemoved.push(item);
+      });
       return {
         ...state,
-        favorites: [...withFavoriteRemoved]
+        favorites: [...withFavoriteRemoved],
       };
+    case actions.FETCH_FAVORITE:
+      const fetchedFavorites = [];
+      //return favorites fetched, need thunk?
+      return {
+        ...state,
+        favorites: [...fetchedFavorites],
+      };
+
     default:
       return state;
   }

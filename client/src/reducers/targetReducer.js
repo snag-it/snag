@@ -1,4 +1,4 @@
-import * as actions from '../actions/actions';
+import * as actions from "../actions/actions";
 
 const initialState = {
   targetLoading: false,
@@ -19,8 +19,10 @@ function targetReducer(state = initialState, { type, payload }) {
       };
     case actions.FETCH_TARGET:
       const modifiedTargetList = [];
-      payload.products.forEach(product => {
-        product['isFavorite'] = false;
+      console.log(payload);
+      payload.arr.target.forEach((product) => {
+        product["isFavorite"] = false;
+
         modifiedTargetList.push(product);
       });
       return {
@@ -29,10 +31,10 @@ function targetReducer(state = initialState, { type, payload }) {
       };
     case actions.MARK_FAVORITE:
       const withMarkedFavorite = state.targetProducts;
-      if (payload.retailer === 'target') {
-        withMarkedFavorite.forEach(product => {
+      if (payload.retailer === "target") {
+        withMarkedFavorite.forEach((product) => {
           if (product.id === payload.productId) {
-            product['isFavorite'] = true;
+            product["isFavorite"] = true;
           }
         });
         return {
@@ -41,11 +43,11 @@ function targetReducer(state = initialState, { type, payload }) {
         };
       }
     case actions.UNMARK_FAVORITE:
-      if (payload.retailer === 'target') {
+      if (payload.retailer === "target") {
         const withUnmarkedFavorite = state.targetProducts;
-        withUnmarkedFavorite.forEach(product => {
+        withUnmarkedFavorite.forEach((product) => {
           if (product.id === payload.productId) {
-            product['isFavorite'] = false;
+            product["isFavorite"] = false;
           }
         });
         return {
