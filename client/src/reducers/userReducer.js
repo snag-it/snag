@@ -4,6 +4,7 @@ const initialState = {
   username: "",
   email: "",
   favorites: [],
+  history: [],
 };
 
 function userReducer(state = initialState, { type, payload }) {
@@ -37,6 +38,11 @@ function userReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         favorites: [...fetchedFavorites],
+      };
+    case actions.FETCH_HISTORY:
+      return {
+        ...state,
+        history: [...payload.fetchedHistory],
       };
 
     default:
