@@ -1,6 +1,23 @@
 import * as actions from "./actions";
 import axios from "axios";
 
+export function fetchHistory(dataId) {
+  return function (dispatch) {
+    return axios
+      .get("/historyData", {
+        dataId,
+      })
+      .then(({ data }) => {
+        console.log("This is my history data", data);
+        dispatch(setHistoryProducts(data));
+      })
+      .catch((err) => console.log(err));
+  };
+}
+
+export function setHistoryProducts(fetchedHistory) {
+  return { type: actions.FETCH_HISTORY, payload: { fetchedHistory } };
+}
 export function fetchAmazon(item) {
   return function (dispatch) {
     return axios

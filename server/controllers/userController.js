@@ -131,26 +131,6 @@ userController.addHistory = async (req, res, next) => {
     console.log(err);
     return next(err);
   }
-
-  /* try {
-    const user = await User.findOne({ _id: '60dcd9ade4979317ae5a6c23' });
-    const updatedHistory = [...user.history];
-    const newHistoryItem = {
-      searchedItem: req.body.item,
-      expireAt: 30,
-      results: res.locals.scraped,
-    };
-    updatedHistory.push(newHistoryItem);
-    const userUpdated = await User.findOneAndUpdate(
-      { _id: '60dcd9ade4979317ae5a6c23' },
-      { history: updatedHistory },
-      { new: true }
-    );
-    return next();
-  } catch (err) {
-    console.log(err);
-    return next(err);
-  } */
 };
 
 userController.getHistoryData = async (req, res, next) => {
