@@ -19,11 +19,11 @@ import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 
-import * as actionCreators from '../../actions/actionCreators';
-import { sampleAmazonData } from '../../sampleData/sampleAmazonData'
-import { sampleEbayData } from '../../sampleData/sampleEbayData'
-import { sampleTargetData } from '../../sampleData/sampleTargetData'
-import NavBar from '../../components/NavBar'
+import * as actionCreators from "../../actions/actionCreators";
+import { sampleAmazonData } from "../../sampleData/sampleAmazonData";
+import { sampleEbayData } from "../../sampleData/sampleEbayData";
+import { sampleTargetData } from "../../sampleData/sampleTargetData";
+import NavBar from "../../components/NavBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,77 +104,77 @@ function Search({
 
   return (
     <div>
-    <NavBar />
-    <Grid container direction="row" justify="center">
-      <Accordion
-        className={classes.root}
-        expanded={isExpanded}
-        onClick={handleToggleAccordianExpansion}
-      >
-        <AccordionSummary
-          expandIcon={<AddIcon fontSize="large" />}
-          aria-label="Expand"
-          aria-controls="additional-actions1-content"
-          id="additional-actions1-header"
+      <NavBar />
+      <Grid container direction="row" justify="center">
+        <Accordion
+          className={classes.root}
+          expanded={isExpanded}
+          onClick={handleToggleAccordianExpansion}
         >
-          <FormControlLabel
-            aria-label="Acknowledge"
-            onClick={(event) => event.stopPropagation()}
-            onFocus={(event) => event.stopPropagation()}
-            control={<SearchIcon className={classes.searchIcon} />}
-            label={
-              <InputBase
-                className={classes.input}
-                placeholder={placeholder}
-                fullWidth
-                value={userInput}
-                onChange={handleInputChange}
-              />
-            }
-          />
-        </AccordionSummary>
-        <AccordionDetails onClick={(event) => event.stopPropagation()}>
-          <List className={classes.retailerCheckboxes}>
-            {[0, 1, 2].map((value) => {
-              const labelId = `checkbox-list-label-${value}`;
-              return (
-                <ListItem
-                  key={value}
-                  role={undefined}
-                  dense
-                  button
-                  onClick={handleChecks(value)}
-                >
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={checked.indexOf(value) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                      inputProps={{ "aria-labelledby": labelId }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText id={labelId} primary={retailers[value]} />
-                  <ListItemSecondaryAction>
-                    <Avatar variant="square" className={classes.retailAvatar}>
-                      {retailerLogos[value]}
-                    </Avatar>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              );
-            })}
-          </List>
-        </AccordionDetails>
-      </Accordion>
-      <Button
-        className={classes.button}
-        onClick={handleSearchSubmit}
-        variant="contained"
-        color="secondary"
-      >
-        submit
-      </Button>
-    </Grid>
+          <AccordionSummary
+            expandIcon={<AddIcon fontSize="large" />}
+            aria-label="Expand"
+            aria-controls="additional-actions1-content"
+            id="additional-actions1-header"
+          >
+            <FormControlLabel
+              aria-label="Acknowledge"
+              onClick={(event) => event.stopPropagation()}
+              onFocus={(event) => event.stopPropagation()}
+              control={<SearchIcon className={classes.searchIcon} />}
+              label={
+                <InputBase
+                  className={classes.input}
+                  placeholder={placeholder}
+                  fullWidth
+                  value={userInput}
+                  onChange={handleInputChange}
+                />
+              }
+            />
+          </AccordionSummary>
+          <AccordionDetails onClick={(event) => event.stopPropagation()}>
+            <List className={classes.retailerCheckboxes}>
+              {[0, 1, 2].map((value) => {
+                const labelId = `checkbox-list-label-${value}`;
+                return (
+                  <ListItem
+                    key={value}
+                    role={undefined}
+                    dense
+                    button
+                    onClick={handleChecks(value)}
+                  >
+                    <ListItemIcon>
+                      <Checkbox
+                        edge="start"
+                        checked={checked.indexOf(value) !== -1}
+                        tabIndex={-1}
+                        disableRipple
+                        inputProps={{ "aria-labelledby": labelId }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText id={labelId} primary={retailers[value]} />
+                    <ListItemSecondaryAction>
+                      <Avatar variant="square" className={classes.retailAvatar}>
+                        {retailerLogos[value]}
+                      </Avatar>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                );
+              })}
+            </List>
+          </AccordionDetails>
+        </Accordion>
+        <Button
+          className={classes.button}
+          onClick={handleSearchSubmit}
+          variant="contained"
+          color="secondary"
+        >
+          submit
+        </Button>
+      </Grid>
     </div>
   );
 }
