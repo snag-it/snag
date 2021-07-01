@@ -11,6 +11,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../actions/actionCreators';
 
 // For Tabs
 function a11yProps(index) {
@@ -43,43 +45,61 @@ const useStyles = makeStyles({
     fontSize: '20px',
   },
   tab: {
-    height: '55px'
-  }
+    height: '55px',
+  },
 });
 
 function NavBar(props) {
   const classes = useStyles();
-  const [badgeNumber, setBadgeNumber] = useState(0);
-  const [activeTabIndex, setActiveTabIndex] = useState(0)
+  const [badgeNumber, setBadgeNumber] = useState();
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   // Ensure proper tag is active on page refresh
-  props.location.pathname === '/' && activeTabIndex !== 0 && setActiveTabIndex(0)
-  props.location.pathname === '/favorites' && activeTabIndex !== 1 && setActiveTabIndex(1)
-  props.location.pathname === '/history' && activeTabIndex !== 2 && setActiveTabIndex(2)
-
+  props.location.pathname === '/home' &&
+    activeTabIndex !== 0 &&
+    setActiveTabIndex(0);
+  props.location.pathname === '/favorites' &&
+    activeTabIndex !== 1 &&
+    setActiveTabIndex(1);
+  props.location.pathname === '/history' &&
+    activeTabIndex !== 2 &&
+    setActiveTabIndex(2);
 
   const handleTabChange = (event, newValue) => {
-    event.preventDefault()
-    setActiveTabIndex(newValue)
+    event.preventDefault();
+    setActiveTabIndex(newValue);
     switch (newValue) {
       case 0:
-        console.log(`props`, props)
-        return props.history.push('/');
+        console.log(`props`, props);
+        return props.history.push('/home');
       case 1:
-        console.log(`props`, props)
+        console.log(`props`, props);
         return props.history.push('/favorites');
       case 2:
-        console.log(`props`, props)
+        console.log(`props`, props);
         return props.history.push('/history');
       default:
         break;
     }
   };
 
+  // useEffect(() => {
+  //   console.log('badge', props.favoriteList.length);
+  //   setBadgeNumber(props.favoriteList.length);
+  // }, [props.favoriteList]);
+
   useEffect(() => {
-    console.log('badge', props.favoriteList.length);
-    setBadgeNumber(props.favoriteList.length);
-  }, [props.favoriteList]);
+    console.log('PROPS FAVORITE: ', props.favoriteList);
+    fetch('/getUserData')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('badge', data.favorites.length);
+        actionCreators.addUserData(data.favorites);
+        setBadgeNumber(data.favorites.length);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  console.log('badgeNumber', badgeNumber);
   return (
     <>
       <CssBaseline />
@@ -89,9 +109,10 @@ function NavBar(props) {
             <MyTabs
               value={activeTabIndex}
               onChange={handleTabChange}
-              aria-label="simple tabs example">
+              aria-label='simple tabs example'
+            >
               <Tab
-              className={classes.tab}
+                className={classes.tab}
                 disableRipple
                 label={
                   <Typography className={classes.tabText}>Home</Typography>
@@ -99,10 +120,10 @@ function NavBar(props) {
                 {...a11yProps(0)}
               />
               <Tab
-              className={classes.tab}
+                className={classes.tab}
                 disableRipple
                 label={
-                  <Badge badgeContent={badgeNumber} color="secondary">
+                  <Badge badgeContent={badgeNumber} color='secondary'>
                     <Typography className={classes.tabText}>
                       Favorites
                     </Typography>
@@ -111,7 +132,7 @@ function NavBar(props) {
                 {...a11yProps(1)}
               />
               <Tab
-              className={classes.tab}
+                className={classes.tab}
                 disableRipple
                 label={
                   <Typography className={classes.tabText}>History</Typography>
@@ -123,14 +144,22 @@ function NavBar(props) {
         </AppBar>
       </ElevationScroll>
       <Toolbar />
-      {props.loading ? <LinearProgress color="secondary" /> : null}
+      {props.loading ? <LinearProgress color='secondary' /> : null}
     </>
   );
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   favoriteList: state.user.favorites,
   loading: false,
 });
 
-export default connect(mapStateToProps, null)(withRouter(NavBar));
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      addUserData: actionCreators.addUserData,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar));
