@@ -17,9 +17,9 @@ import { useParams, useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color='inherit' href='https://material-ui.com/'>
         SnagIt
       </Link>{' '}
       {new Date().getFullYear()}
@@ -42,7 +42,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: 'url(http://localhost:3001/img/LOGO2.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+      theme.palette.type === 'light'
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
@@ -63,6 +65,12 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  link: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 }));
 
@@ -72,18 +80,31 @@ export default function SignInSide() {
 
   const handleSubmit = () => {
     history.push('/home');
-
-
   }
 
   const handleSignUp = () => {
     history.push('/signup');
+  };
+
+  const googleOAUTH = () => {
+    // const requestOptions = {
+    //   method: 'GET',
+    //   headers: {'Content-Type': 'appliction/json'},
+    //   body: JSON.stringify({username, password}),
+    // };
+
+    // fetch('/google', requestOptions)
+    // .then(res => console.log(res))
+    // .catch(err => console.log(err));
+
+    console.log('hi')
   }
 
-
-
+  const facebookOAUTH = () => {
+    console.log('oh')
+  }
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid container component='main' className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -95,54 +116,75 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
 
-          <Typography component="h1" variant="h5">
+          <Typography component='h1' variant='h5'>
             Login
           </Typography>
 
-          <form className={classes.form} noValidate method="POST" action='/'>
+          <form
+            className={classes.form}
+            method='POST'
+            action='/login'
+            noValidate
+          >
             <TextField
-              variant="outlined"
-              margin="normal"
+              variant='outlined'
+              margin='normal'
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id='email'
+              label='Email Address'
+              name='email'
+              autoComplete='email'
               autoFocus
             />
 
             <TextField
-              variant="outlined"
-              margin="normal"
+              variant='outlined'
+              margin='normal'
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              name='password'
+              label='Password'
+              type='password'
+              id='password'
+              autoComplete='current-password'
             />
 
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              control={<Checkbox value='remember' color='primary' />}
+              label='Remember me'
             />
 
             <Button onClick={handleSubmit}
-              type="submit"
+              type='submit'
               fullWidth
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               className={classes.submit}
             >
               Login
             </Button>
 
+            {/* <Button onClick={googleOAUTH}
+              fullWidth
+              variant='contained'
+              color='primary'
+              className={classes.submit}
+            >
+              Login with Google
+            </Button> */}
+
+            <a href="/auth/google/" fullWidth variant='contained' color='primary' className={classes.link}>
+            <i className="fab fa-google"></i>Login with Google</a>
             
+            <br></br>
+
+            <a href="/auth/facebook" fullWidth variant='contained' color='primary' className={classes.link}>
+            <i className="fab fa-facebook"></i>Login with Facebook</a>
+
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href='#' variant='body2'>
                   Forgot password?
                 </Link>
               </Grid>

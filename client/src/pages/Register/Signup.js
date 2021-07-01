@@ -17,9 +17,9 @@ import { useParams, useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color='inherit' href='https://material-ui.com/'>
         SnagIt
       </Link>{' '}
       {new Date().getFullYear()}
@@ -36,7 +36,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: 'url(http://localhost:3001/img/LOGO2.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+      theme.palette.type === 'light'
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
@@ -68,18 +70,25 @@ export default function SignInSide() {
   let history = useHistory();
 
   const handleSubmit = () => {
-    history.push('/home');
 
-  }
+    const request = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({username, password, email}),
+    };
+
+    fetch('/signup', request)
+    .then((res) => console.log(res))
+    .catch(err => console.log(err));
+    history.push('/home');
+  };
 
   const handleLogin = () => {
     history.push('/');
-  }
-
-
+  };
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid container component='main' className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -91,85 +100,89 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
 
-          <Typography component="h1" variant="h5">
+          <Typography component='h1' variant='h5'>
             Sign Up
           </Typography>
 
-          <form className={classes.form} noValidate method="POST" action='/signup'>
-          <TextField
-              variant="outlined"
-              margin="normal"
+          <form
+            className={classes.form}
+            method='POST'
+            action='/signup'
+            noValidate
+          >
+            <TextField
+              variant='outlined'
+              margin='normal'
               required
               fullWidth
-              id="name"
-              label="Name"
-              name="name"
-              autoComplete="name"
+              id='name'
+              label='Name'
+              name='name'
+              autoComplete='name'
               autoFocus
             />
 
             <TextField
-              variant="outlined"
-              margin="normal"
+              variant='outlined'
+              margin='normal'
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id='email'
+              label='Email Address'
+              name='email'
+              autoComplete='email'
               autoFocus
             />
 
             <TextField
-              variant="outlined"
-              margin="normal"
+              variant='outlined'
+              margin='normal'
               required
               fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
+              id='username'
+              label='Username'
+              name='username'
+              autoComplete='username'
               autoFocus
-            />      
-       
+            />
 
             <TextField
-              variant="outlined"
-              margin="normal"
+              variant='outlined'
+              margin='normal'
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              name='password'
+              label='Password'
+              type='password'
+              id='password'
+              autoComplete='current-password'
             />
 
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              control={<Checkbox value='remember' color='primary' />}
+              label='Remember me'
             />
 
-            <Button onClick={handleSubmit}
-              type="submit"
+            <Button
+              onClick={handleSubmit}
+              type='submit'
               fullWidth
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               className={classes.submit}
             >
               Sign Up
             </Button>
 
-            
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href='#' variant='body2'>
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
                 <Link onClick={handleLogin}>
-                  {"Already have an account? Log in"}
+                  {'Already have an account? Log in'}
                 </Link>
               </Grid>
             </Grid>
