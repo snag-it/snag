@@ -77,11 +77,11 @@ app.get("/", (req, res) => {
 
 app.post(
   "/getPrices",
-  //userController.lookUpHistory,
+  userController.lookUpHistory,
   amazonController.getAmazon,
   ebayController.getEbay,
   targetController.getTarget,
-  // userController.addHistory,
+  userController.addHistory,
 
   (req, res) => {
     res.status(200).json(res.locals.scraped);
