@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 // const { describe } = require('yargs');
 const server = 'http://localhost:3001';
 const User = require('../server/models/userModel');
-const { describe, beforeAll } = require('@jest/globals');
-
+// const { describe, beforeAll } = require('@jest/globals');
+/*
 beforeEach((done) => {
   mongoose.connect(
     'mongodb+srv://vanessa:codesmith123@cluster0.7anxu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
@@ -19,7 +19,7 @@ afterEach((done) => {
   mongoose.connection.db.dropDatabase(() => {
     mongoose.connection.close(() => done());
   });
-});
+}); */
 
 describe('Route integration', () => {
   describe('/', () => {
@@ -35,7 +35,7 @@ describe('Route integration', () => {
 
   describe('/getUserData', () => {
     // create a user
-    /*
+
     const testUser = User.create({
       username: 'testUsername',
       password: 'testPassword',
@@ -45,7 +45,7 @@ describe('Route integration', () => {
       favorites: [],
       history: [],
     });
-*/
+    // it needs to have a hardcoded id in userController to pass this
     it('responds with 200 status and application/json content type', () => {
       return request(server)
         .get('/getUserData')

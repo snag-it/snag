@@ -1,8 +1,8 @@
-import * as actions from "../actions/actions";
+import * as actions from '../actions/actions';
 
 const initialState = {
-  username: "",
-  email: "",
+  username: '',
+  email: '',
   favorites: [],
   history: [],
 };
@@ -32,8 +32,8 @@ function userReducer(state = initialState, { type, payload }) {
         ...state,
         favorites: [...withFavoriteRemoved],
       };
-    case actions.FETCH_FAVORITE:
-      const fetchedFavorites = [];
+    case actions.FETCH_USER_DATA:
+      const fetchedFavorites = actions.payload;
       //return favorites fetched, need thunk?
       return {
         ...state,

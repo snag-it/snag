@@ -1,14 +1,14 @@
-import * as actions from "./actions";
-import axios from "axios";
+import * as actions from './actions';
+import axios from 'axios';
 
 export function fetchHistory(dataId) {
   return function (dispatch) {
     return axios
-      .get("/historyData", {
+      .get('/historyData', {
         dataId,
       })
       .then(({ data }) => {
-        console.log("This is my history data", data);
+        console.log('This is my history data', data);
         dispatch(setHistoryProducts(data));
       })
       .catch((err) => console.log(err));
@@ -21,7 +21,7 @@ export function setHistoryProducts(fetchedHistory) {
 export function fetchAmazon(item) {
   return function (dispatch) {
     return axios
-      .post("/getPrices", {
+      .post('/getPrices', {
         item,
       })
       .then(({ data }) => {
@@ -43,7 +43,7 @@ export function setAmazonProducts(arr) {
 export function fetchEbay(item) {
   return function (dispatch) {
     return axios
-      .post("/getPrices", {
+      .post('/getPrices', {
         item,
       })
       .then(({ data }) => {
@@ -65,7 +65,7 @@ export function setEbayProducts(arr) {
 export function fetchTarget(item) {
   return function (dispatch) {
     return axios
-      .post("/getPrices", {
+      .post('/getPrices', {
         item,
       })
       .then(({ data }) => {
@@ -82,21 +82,87 @@ export function setTargetProducts(arr) {
   return { type: actions.FETCH_TARGET, payload: { arr } };
 }
 
-export const markFavorite = (retailer, productId) => ({
-  type: actions.MARK_FAVORITE,
-  payload: { retailer, productId },
-});
+export const markFavorite = (retailer, productId) => {
+  return {
+    type: actions.MARK_FAVORITE,
+    payload: { retailer, productId },
+  };
+};
 
-export const unmarkFavorite = (retailer, productId) => ({
-  type: actions.UNMARK_FAVORITE,
-  payload: { retailer, productId },
-});
+export const unmarkFavorite = (retailer, productId) => {
+  return {
+    type: actions.UNMARK_FAVORITE,
+    payload: { retailer, productId },
+  };
+};
 
-export const addFavorite = (item) => ({
-  type: actions.ADD_FAVORITE,
-  payload: { item },
-});
+// need to adjust to work with backend
+export const addFavorite = (item) => {
+  console.log('added a fave');
+  return { type: actions.ADD_FAVORITE, payload: { item } };
+};
 
+export function addFavoriteToDB(item) {
+  let requestItem = {
+    id: item.id,
+    retailer: item.retailer,
+    title: item.title,
+    price: item.price,
+    link: item.link,
+    image: item.image,
+  };
+  const requestOptions = {
+    method: 'POST',
+    headers: new Headers({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ requestItem }),
+  };
+  return (dispatch) => {
+    fetch('/addFavorite', requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(addFavorite(item));
+      })
+      .catch((err) => console.log(err));
+  };
+}
+
+export function removeFavoriteFromDB(item) {
+  const requestOptions = {
+    method: 'POST',
+    headers: new Headers({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ item }),
+  };
+  return (dispatch) => {
+    fetch('/removeFavorite', requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(removeFavorite(item.id));
+      })
+      .catch((err) => console.log(err));
+  };
+}
+
+export const addUserData = (favorites) => {
+  console.log(favorites);
+  return {
+    type: actions.FETCH_USER_DATA,
+    payload: favorites,
+  };
+};
+
+/*
+return axios
+      .post('/addFavorite', {
+        item,
+      })
+      .then(({ data }) => {
+        addFavorite(item);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+*/
+
+// need to adjust to work with backend
 export const removeFavorite = (itemId) => ({
   type: actions.REMOVE_FAVORITE,
   payload: { itemId },
@@ -105,10 +171,10 @@ export const removeFavorite = (itemId) => ({
 //post favorite
 
 export function postFavorite(itemId) {
-  console.log("posting favs...");
+  console.log('posting favs...');
   return function () {
     return axios
-      .post("/postFavorites", { favorite })
+      .post('/postFavorites', { favorite })
       .then(({ res }) => {
         console.log(res, res.data);
       })
@@ -119,10 +185,10 @@ export function postFavorite(itemId) {
 //fetch favorite
 
 export function fetchFavorites() {
-  console.log("getting data");
+  console.log('getting data');
   return function (dispatch) {
-    return axios.get("/getFavorites").then(({ data }) => {
-      console.log("58 ", data);
+    return axios.get('/getFavorites').then(({ data }) => {
+      console.log('58 ', data);
       dispatch(setFavorites(data));
     });
   };
