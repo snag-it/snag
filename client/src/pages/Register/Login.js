@@ -83,6 +83,7 @@ export default function SignInSide() {
   }
 
   const handleSignUp = () => {
+    console.log('hi');
     history.push('/signup');
   };
 
