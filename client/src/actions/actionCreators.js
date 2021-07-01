@@ -22,7 +22,8 @@ export function fetchAmazon(item) {
   return function (dispatch) {
     return axios
       .post('/getPrices', {
-        item,
+        item: item,
+        store: 'amazon',
       })
       .then(({ data }) => {
         //set data somewhere
@@ -44,7 +45,8 @@ export function fetchEbay(item) {
   return function (dispatch) {
     return axios
       .post('/getPrices', {
-        item,
+        item: item,
+        store: 'ebay',
       })
       .then(({ data }) => {
         //set data somewhere
@@ -64,14 +66,16 @@ export function setEbayProducts(arr) {
 
 export function fetchTarget(item) {
   return function (dispatch) {
+    console.log('target reducer firing ');
     return axios
       .post('/getPrices', {
-        item,
+        item: item,
+        store: 'target',
       })
       .then(({ data }) => {
         //set data somewhere
-        dispatch(setTargetProducts(data));
         console.log(data);
+        dispatch(setTargetProducts(data));
       })
       .then(() => fetchFavorites())
       .catch((err) => console.log(err));

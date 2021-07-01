@@ -110,6 +110,7 @@ app.get('/', (req, res) => {
 // sending request send a post request to '/getPrices'
 // object off of req.body
 // after amazon send to ebay and then target and then send the accumulated data on locals.scraped to frontend as a json object
+
 app.post(
   '/getPrices',
   cacheController.findCachedItem,
@@ -119,6 +120,7 @@ app.post(
   userController.addHistory,
   cacheController.makeCachedItem,
   (req, res) => {
+    console.log('returning data: ', res.locals.scraped);
     res.status(200).json(res.locals.scraped);
   }
 );
@@ -175,8 +177,6 @@ app.post(
 // send new updated entire favorites list back to frontend
 
 app.post('/addFavorite', userController.addFavorite, (req, res) => {
-  console.log('inside add favorite route');
-  console.log(res.locals.favorites);
   res.status(200).json(res.locals.favorites);
 });
 
