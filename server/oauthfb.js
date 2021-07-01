@@ -8,7 +8,9 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:8080/auth/facebook/secrets"
   },
   function(accessToken, refreshToken, profile, cb) {
-      console.log(cb(err, user));
+    User.findOrCreate({facebookId: profile.id}, function (err, user) {
+      return cb(err, user);
+    });
   }
 ));
 
