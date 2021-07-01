@@ -5,6 +5,14 @@ const path = require("path");
 const amazonController = require("./puppeteer/amazon");
 const ebayController = require("./puppeteer/ebay");
 const targetController = require("./puppeteer/target");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+var cookieSession = require("cookie-session");
+const session = require("express-session");
+require("./oauth");
+require("./oauthfb");
+const nodemailer = require("nodemailer");
+
 const cookieParser = require("cookie-parser");
 
 PORT = 3001;
@@ -19,6 +27,8 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, "../client/public")));
 
 //define and connect to DB
 const mongoURI =
@@ -40,6 +50,31 @@ app.use("/public", express.static(path.resolve(__dirname, "../client/public")));
 // WEBPACK DEV SERVER
 
 app.use("/build", express.static(path.resolve(__dirname, "../client/build")));
+
+app.use(
+  cookieSession({
+    name: "SnagIt-session",
+    keys: ["key1", "key2"],
+  })
+);
+
+// const isLoggedIn = (req, res, next) => {
+//   if (req.user) {
+//     next()
+//   } else {
+//     res.sendStatus(401);
+//   }
+// }
+app.use(
+  session({
+    secret: "key",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/getUserData", userController.getUserData, (req, res) => {
   res.status(200).json(res.locals.userData);
@@ -94,6 +129,7 @@ app.post(
   userController.verifyUser,
   cookieController.setSSIDCookie,
   sessionController.startSession,
+
   (req, res) => {
     res.redirect("/home");
   }
@@ -104,7 +140,32 @@ app.post(
   userController.createUser,
   cookieController.setSSIDCookie,
   sessionController.startSession,
+
   (req, res) => {
+    const transporter = nodemailer.createTransport({
+      service: "hotmail",
+      auth: {
+        user: "snagit.app@outlook.com",
+        pass: "Luhansehun520",
+      },
+    });
+
+    console.log("testing", req.body.email);
+    const options = {
+      from: "",
+      to: req.body.email,
+      subject: "Thank you so much for choosing out service.",
+      text: "Daily deals will be send to you with promo codes.",
+    };
+
+    transporter.sendMail(options, function (err, info) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log("Sent", info.response);
+    });
+
     res.redirect("/home");
   }
 );
@@ -132,6 +193,37 @@ app.use((err, req, res, next) => {
   const errObj = { ...defaultErr, ...err };
   res.status(400).send(errObj.error);
 });
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("/home");
+  }
+);
+
+app.get("/logout", (req, res) => {
+  req.session = null;
+  req.logout();
+  res.redirect("/");
+});
+
+app.get("/auth/facebook", passport.authenticate("facebook"));
+
+app.get(
+  "/auth/facebook/secrets",
+  passport.authenticate("facebook", { failureRedirect: "/" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("/home");
+  }
+);
 
 module.exports = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
