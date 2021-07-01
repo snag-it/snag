@@ -30,6 +30,7 @@ export function DisplayGrid({
   //     })
   //     .catch((err) => console.log(err));
   // }, []);
+
   return (
     <Grid
       container
@@ -39,11 +40,14 @@ export function DisplayGrid({
       alignContent="center"
     >
       {withSearch && (
-        <Search retailers={retailers} retailerLogos={retailerLogos} />
+        <div>
+          <Search retailers={retailers} retailerLogos={retailerLogos} />
+        </div>
       )}
-
-      {withLoading === false ? (
-        <FacebookCircularProgress />
+      {withLoading ? (
+        <div>
+          <FacebookCircularProgress />
+        </div>
       ) : (
         <Grid container direction="row" justify="center" alignContent="center">
           {retailers.map((retailer, index) => (

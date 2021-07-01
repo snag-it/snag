@@ -5,7 +5,11 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 // Inspired by the former Facebook spinners.
 const useStylesFacebook = makeStyles((theme) => ({
   root: {
-    position: "relative",
+    position: "absolute",
+    top: "400px",
+    maxWidth: "40px",
+    maxHeight: "40px",
+    zIndex: 1000,
   },
   bottom: {
     color: theme.palette.grey[theme.palette.type === "light" ? 200 : 700],

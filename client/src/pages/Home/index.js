@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
   ebayProducts: state.ebay.ebayProducts,
   targetProducts: state.target.targetProducts,
   withSearch: true,
-  withLoading: false,
+  withLoading: state.amazon.amazonLoading,
 });
 
 export default connect(mapStateToProps, null)(DisplayGrid);

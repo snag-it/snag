@@ -1,6 +1,14 @@
 import * as actions from "./actions";
 import axios from "axios";
 
+export function fetchStarted(fetching) {
+  return { type: actions.FETCH_STARTED, payload: { fetching: true } };
+}
+
+export function fetchComplete(fetching) {
+  return { type: actions.FETCH_COMPLETE, payload: { fetching: false } };
+}
+
 export function fetchHistory(dataId) {
   return function (dispatch) {
     return axios
@@ -20,6 +28,7 @@ export function setHistoryProducts(fetchedHistory) {
 }
 export function fetchAmazon(item) {
   return function (dispatch) {
+    dispatch(fetchStarted());
     return axios
       .post("/getPrices", {
         item,
@@ -29,7 +38,15 @@ export function fetchAmazon(item) {
         dispatch(setAmazonProducts(data));
         console.log(data);
       })
+      .then(() => {
+        console.log("What is Fetched?");
+      })
       .then(() => fetchFavorites())
+      .then(() => {
+        //set data somewhere
+        dispatch(fetchComplete());
+        console.log("Did my fetch finish?");
+      })
       .catch((err) => console.log(err));
   };
 }
