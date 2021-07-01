@@ -32,6 +32,7 @@ userController.verifyUser = async (req, res, next) => {
   console.log(req.body);
   try {
     const user = await User.findOne({ email: req.body.email });
+    console.log(user);
     const userStatus = await user.comparePassword(req.body.password);
     if (userStatus === true) {
       res.locals.user = user;
@@ -112,6 +113,7 @@ userController.getUserData = async (req, res, next) => {
 };
 
 userController.addHistory = async (req, res, next) => {
+  console.log(req.cookies);
   try {
     const historyItem = await History.create({
       searchedItem: req.body.item,
