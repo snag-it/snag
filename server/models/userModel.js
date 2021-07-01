@@ -22,17 +22,8 @@ const userSchema = new Schema({
   ],
   history: [
     {
-      searchedItem: { type: String },
-      createdAt: { type: Date, expires: 600, default: Date.now },
-      results: [
-        {
-          id: { type: String },
-          retailer: { type: String },
-          price: { type: Number },
-          imgSrc: { type: String },
-          link: { type: String },
-        },
-      ],
+      type: Schema.Types.ObjectId,
+      ref: 'history',
     },
   ],
 });
@@ -50,5 +41,7 @@ userSchema.methods.comparePassword = function (potentialPass) {
   const user = this;
   return bcrypt.compare(potentialPass, user.password);
 };
+
+// userSchema.createIndex({ createdAt: 1 }, { expireAfterSeconds: 30 });
 
 module.exports = mongoose.model('User', userSchema);
