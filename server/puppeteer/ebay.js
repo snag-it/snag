@@ -59,8 +59,9 @@ ebayController.getEbay = (req, res, next) => {
       const removeStr2 = '<span class="BOLD">';
       const removeStr3 = '</span>';
 
-      for (let i = 0; i <= 10; i++) {
+      for (let i = 0; i < 11; i++) {
         //regexes to remove stray html that didn't get filtered out, might need adjustment
+        if (i === 0) continue;
         const tester = new RegExp(removeStr, 'g');
         const tester2 = new RegExp(removeStr2, 'g');
         const tester3 = new RegExp(removeStr3, 'g');
@@ -100,9 +101,9 @@ ebayController.getEbay = (req, res, next) => {
         let titlePriceObj = {
           id: 'ebay' + [i],
           title: sItemTitle[i],
-          price: parseFloat(sItemPrice[i]),
+          price: `$${sItemPrice[i]}`,
           imgSrc: image[i],
-          url: link[i],
+          link: link[i],
           retailer: 'Ebay',
         };
         // console.log("What is title priceobj?", titlePriceObj);

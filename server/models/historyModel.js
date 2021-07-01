@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const historySchema = new Schema({
   searchedItem: { type: String },
-  createdAt: { type: Date, expires: 30, default: Date.now },
+  createdAt: { type: Date, expires: 600, default: Date.now() },
   results: { type: Object },
 });
 

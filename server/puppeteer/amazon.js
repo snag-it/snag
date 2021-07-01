@@ -95,8 +95,11 @@ amazonController.getAmazon = (req, res, next) => {
           let totalsObj = {
             id: "amazon" + [i],
             retailer: "Amazon",
-            title: titleArr[i],
-            price: Number(priceArr[i]),
+            title:
+              titleArr[i].length > 50
+                ? titleArr[i].substring(0, 50)
+                : titleArr[i],
+            price: `$${priceArr[i]}`,
             imgSrc: imgArr[i],
             link: `https://www.amazon.com` + newLinkArr[i],
           };
