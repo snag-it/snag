@@ -5,6 +5,7 @@ const path = require('path');
 const amazonController = require('./puppeteer/amazon');
 const ebayController = require('./puppeteer/ebay');
 const targetController = require('./puppeteer/target');
+const cookieParser = require('cookie-parser');
 
 PORT = 3001;
 const app = express();
@@ -14,6 +15,7 @@ const userController = require('./controllers/userController');
 const cookieController = require('./controllers/cookieController');
 const sessionController = require('./controllers/sessionController');
 
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
