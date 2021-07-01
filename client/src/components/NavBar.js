@@ -89,16 +89,14 @@ function NavBar(props) {
   // }, [props.favoriteList]);
 
   useEffect(() => {
-    console.log('PROPS FAVORITE: ', props.favoriteList);
     fetch('/getUserData')
       .then((res) => res.json())
       .then((data) => {
-        console.log('badge', data.favorites.length);
         actionCreators.addUserData(data.favorites);
         setBadgeNumber(data.favorites.length);
       })
       .catch((err) => console.log(err));
-  }, []);
+  });
   console.log('badgeNumber', badgeNumber);
   return (
     <>
