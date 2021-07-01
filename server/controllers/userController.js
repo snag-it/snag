@@ -93,10 +93,12 @@ userController.removeFavorite = async (req, res, next) => {
 };
 
 userController.getUserData = async (req, res, next) => {
+  console.log('hit');
   try {
     // get the user from the database from whoever just logged in
     const user = await User.findOne({ _id: '60dcd9ade4979317ae5a6c23' });
     // we want to send to frontend: username, email, favorites, and history
+    console.log(user);
     const userData = {
       username: user.username,
       email: user.email,

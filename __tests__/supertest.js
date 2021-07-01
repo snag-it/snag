@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 // const { describe } = require('yargs');
 const server = 'http://localhost:3001';
 const User = require('../server/models/userModel');
+const { describe, beforeAll } = require('@jest/globals');
 
 beforeEach((done) => {
   mongoose.connect(
@@ -31,10 +32,34 @@ describe('Route integration', () => {
       });
     });
   });
-});
 
-// get for /getUserData
-// expect /application\/json/
+  describe('/getUserData', () => {
+    // create a user
+    /*
+    const testUser = User.create({
+      username: 'testUsername',
+      password: 'testPassword',
+      firstname: 'test',
+      lastname: 'test',
+      email: 'test@test.com',
+      favorites: [],
+      history: [],
+    });
+*/
+    it('responds with 200 status and application/json content type', () => {
+      return request(server)
+        .get('/getUserData')
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+    });
+    // expect userData.username = in database
+    // expect userData.email = in database
+    // expect userData.favorites = in database
+    // expect userData.history = in database
+    // expect /application\/json/
+    // expect 200
+  });
+});
 
 // get for /home
 
