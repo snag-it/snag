@@ -63,10 +63,10 @@ function FavoritesList({
   return (
     <main className={classes.content}>
       <Container maxWidth='md'>
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           <ul className={classes.root}>
             {favorites.map((product, i) => (
-              <Grid item key={i} xs={12} sm={5} md={4.5}>
+              <Grid item key={i} xs={12} sm={6} md={6}>
                 <RetailItem
                   key={product.id}
                   currentItemId={product.id}
