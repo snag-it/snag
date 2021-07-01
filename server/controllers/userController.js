@@ -29,7 +29,8 @@ userController.createUser = (req, res, next) => {
 };
 
 userController.verifyUser = (req, res, next) => {
-  User.findOne({ username: req.body.username })
+  console.log(req.body);
+  User.findOne({ email: req.body.email })
     .then((user) => {
       if (user.comparePassword(req.body.password)) {
         res.locals.user = user;

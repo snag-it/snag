@@ -91,7 +91,7 @@ app.post(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   (req, res) => {
-    res.status(200).json(true);
+    res.redirect('/home');
   }
 );
 
