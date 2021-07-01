@@ -5,6 +5,7 @@ const path = require('path');
 const amazonController = require('./puppeteer/amazon');
 const ebayController = require('./puppeteer/ebay');
 const targetController = require('./puppeteer/target');
+const cacheController = require('./controllers/cacheController');
 
 PORT = 3001;
 const app = express();
@@ -74,11 +75,12 @@ app.get('/', (req, res) => {
 // after amazon send to ebay and then target and then send the accumulated data on locals.scraped to frontend as a json object
 app.post(
   '/getPrices',
-  userController.lookUpHistory,
+  cacheController.findCachedItem,
   amazonController.getAmazon,
   ebayController.getEbay,
   targetController.getTarget,
   userController.addHistory,
+  cacheController.makeCachedItem,
   (req, res) => {
     res.status(200).json(res.locals.scraped);
   }
