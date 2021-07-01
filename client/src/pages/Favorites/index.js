@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FavoritesList from '../../components/FavoritesList';
+import NavBar from '../../components/NavBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +24,14 @@ const useStyles = makeStyles((theme) => ({
 function FavoritesPage({ favorites }) {
   const classes = useStyles();
   console.log(`favorites`, favorites);
-  return <FavoritesList productData={favorites} />;
+  return (
+    <div>
+      <NavBar />
+      <Grid container direction='row' justify='center'>
+        <FavoritesList productData={favorites} />
+      </Grid>
+    </div>
+  );
 }
 // console.log(favorites);
 const mapStateToProps = (state) => ({

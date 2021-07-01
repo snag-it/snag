@@ -41,25 +41,22 @@ function FavoritesList({
 
   console.log('FAVORITES: ', favorites);
   return (
-    <div>
-      <NavBar />
-      <ul className={classes.root}>
-        {productData.map((product) => (
-          <RetailItem
-            key={product.id}
-            currentItemId={product.id}
-            retailer={product.retailer}
-            title={product.title}
-            price={product.price}
-            image={product.image}
-            logo={product.logo}
-            addFavoriteToDB={addFavoriteToDB}
-            removeFavoriteFromDB={removeFavoriteFromDB}
-            fetchFavorites={fetchFavorites}
-          />
-        ))}
-      </ul>
-    </div>
+    <ul className={classes.root}>
+      {favorites.map((product) => (
+        <RetailItem
+          key={product.id}
+          currentItemId={product.id}
+          retailer={product.retailer}
+          title={product.title}
+          price={product.price}
+          image={product.image}
+          logo={product.logo}
+          addFavoriteToDB={addFavoriteToDB}
+          removeFavoriteFromDB={removeFavoriteFromDB}
+          fetchFavorites={fetchFavorites}
+        />
+      ))}
+    </ul>
   );
 }
 
