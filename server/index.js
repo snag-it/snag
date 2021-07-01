@@ -73,33 +73,14 @@ app.get("/", (req, res) => {
 // object off of req.body
 // after amazon send to ebay and then target and then send the accumulated data on locals.scraped to frontend as a json object
 
-// const pricesRouter = app.use(function (req, res, next) {
-//   console.log(req.body.store);
-//   if (req.store === "amazon") {
-//     console.log("amazon scraper called");
-//     amazonController.getAmazon(req, res, next);
-//   }
-
-//   if (req.store === "ebay") {
-//     console.log("ebay scraper called");
-//     ebayController.getEbay(req, res, next);
-//   }
-
-//   if (req.store === "target") {
-//     console.log("target scraper called");
-//     targetController.getTarget(req, res, next);
-//   }
-// });
-
 app.post(
   "/getPrices",
   //userController.lookUpHistory,
   amazonController.getAmazon,
   ebayController.getEbay,
   targetController.getTarget,
-  //userController.addHistory,
+  // userController.addHistory,
 
-  //pricesRouter,
   (req, res) => {
     res.status(200).json(res.locals.scraped);
   }

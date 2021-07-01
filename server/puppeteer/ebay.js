@@ -87,7 +87,8 @@ ebayController.getEbay = (req, res, next) => {
           if (sItemPrice[i] && sItemPrice[i].includes(removeStr3)) {
             let split = sItemPrice[i].split(" ");
             sItemPrice[i] = split[0];
-            sItemPrice[i] = sItemPrice[i].replace(/<(.|\n)*?>/g, "");
+            sItemPrice[i] = sItemPrice[i].replace(/[<span/>]/gi, "");
+            //sItemPrice[i] = sItemPrice[i].replace(/<(.|\n)*?>/g, "");
           }
 
           // add in a link
@@ -100,7 +101,10 @@ ebayController.getEbay = (req, res, next) => {
 
           let titlePriceObj = {
             id: "ebay" + [i],
-            title: sItemTitle[i],
+            title:
+              sItemTitle[i].length > 50
+                ? sItemTitle[i].substring(0, 50)
+                : sItemTitle[i],
             price: `$${sItemPrice[i]}`,
             imgSrc: image[i],
             link: link[i],

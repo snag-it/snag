@@ -93,7 +93,10 @@ targetController.getTarget = (req, res, next) => {
 
           let titlePriceObj = {
             id: "target" + [i],
-            title: sItemTitle[i],
+            title:
+              sItemTitle[i].length > 50
+                ? sItemTitle[i].substring(0, 50)
+                : sItemTitle[i],
             price: `$${sItemPrice[i]}`,
             imgSrc: image[i],
             link: linkArr[i],
