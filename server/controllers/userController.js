@@ -96,7 +96,7 @@ userController.getUserData = async (req, res, next) => {
   console.log('hit');
   try {
     // get the user from the database from whoever just logged in
-    const user = await User.findOne({ _id: '60ddfe7440c5d57fa3123ca0' });
+    const user = await User.findOne({ _id: req.cookies.ssid });
     // we want to send to frontend: username, email, favorites, and history
     console.log(user);
     const userData = {

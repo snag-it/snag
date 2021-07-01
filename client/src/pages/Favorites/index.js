@@ -39,9 +39,7 @@ function FavoritesPage({ favorites }) {
   return (
     <div>
       <NavBar />
-      <Grid container direction='row' justify='center' alignContent='center'>
-        <FavoritesList productData={favorites} />
-      </Grid>
+      <FavoritesList productData={favorites} />
     </div>
   );
 }

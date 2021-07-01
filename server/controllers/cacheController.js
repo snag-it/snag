@@ -10,12 +10,17 @@ cacheController.makeCachedItem = (req, res, next) => {
 };
 
 cacheController.findCachedItem = (req, res, next) => {
+  redis.keys('*', (err, reply) => {
+    console.log(reply);
+  });
+
   redis.get(req.body.item, (err, reply) => {
     if (err) return next(err);
     if (reply) {
       reply = JSON.parse(reply);
       return res.status(200).json(reply);
     }
+    res.locals.scraped = {};
     return next();
   });
 };

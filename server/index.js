@@ -120,7 +120,6 @@ app.post(
   userController.addHistory,
   cacheController.makeCachedItem,
   (req, res) => {
-    console.log('returning data: ', res.locals.scraped);
     res.status(200).json(res.locals.scraped);
   }
 );

@@ -5,14 +5,34 @@ import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import * as actionCreators from '../actions/actionCreators';
 import RetailItem from './RetailItem';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(10),
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+
+  RetailItem: {
+    display: 'flex',
+  },
+
+  content: {
+    flexGrow: 1,
+    height: '100vh',
+    overflow: 'auto',
+  },
+
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingRight: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    paddingLeft: theme.spacing(4),
   },
 }));
 
@@ -41,22 +61,30 @@ function FavoritesList({
 
   console.log('FAVORITES: ', favorites);
   return (
-    <ul className={classes.root}>
-      {favorites.map((product) => (
-        <RetailItem
-          key={product.id}
-          currentItemId={product.id}
-          retailer={product.retailer}
-          title={product.title}
-          price={product.price}
-          image={product.image}
-          logo={product.logo}
-          addFavoriteToDB={addFavoriteToDB}
-          removeFavoriteFromDB={removeFavoriteFromDB}
-          fetchFavorites={fetchFavorites}
-        />
-      ))}
-    </ul>
+    <main className={classes.content}>
+      <Container maxWidth='md'>
+        <Grid container spacing={3}>
+          <ul className={classes.root}>
+            {favorites.map((product, i) => (
+              <Grid item key={i} xs={12} sm={5} md={4.5}>
+                <RetailItem
+                  key={product.id}
+                  currentItemId={product.id}
+                  retailer={product.retailer}
+                  title={product.title}
+                  price={product.price}
+                  image={product.image}
+                  logo={product.logo}
+                  addFavoriteToDB={addFavoriteToDB}
+                  removeFavoriteFromDB={removeFavoriteFromDB}
+                  fetchFavorites={fetchFavorites}
+                />
+              </Grid>
+            ))}
+          </ul>
+        </Grid>
+      </Container>
+    </main>
   );
 }
 

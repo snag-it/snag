@@ -23,11 +23,12 @@ export function fetchAmazon(item) {
     return axios
       .post('/getPrices', {
         item: item,
-        store: 'amazon',
       })
       .then(({ data }) => {
         //set data somewhere
         dispatch(setAmazonProducts(data));
+        dispatch(setEbayProducts(data));
+        dispatch(setTargetProducts(data));
         console.log(data);
       })
       .then(() => fetchFavorites())
@@ -43,18 +44,18 @@ export function setAmazonProducts(arr) {
 
 export function fetchEbay(item) {
   return function (dispatch) {
-    return axios
-      .post('/getPrices', {
-        item: item,
-        store: 'ebay',
-      })
-      .then(({ data }) => {
-        //set data somewhere
-        dispatch(setEbayProducts(data));
-        console.log(data);
-      })
-      .then(() => fetchFavorites())
-      .catch((err) => console.log(err));
+    console.log('Fetch Ebay taken out');
+    // return axios
+    //   .post('/getPrices', {
+    //     item: item,
+    //   })
+    //   .then(({ data }) => {
+    //     //set data somewhere
+    //     dispatch(setEbayProducts(data));
+    //     console.log(data);
+    //   })
+    //   .then(() => fetchFavorites())
+    //   .catch((err) => console.log(err));
   };
 }
 
@@ -66,19 +67,19 @@ export function setEbayProducts(arr) {
 
 export function fetchTarget(item) {
   return function (dispatch) {
-    console.log('target reducer firing ');
-    return axios
-      .post('/getPrices', {
-        item: item,
-        store: 'target',
-      })
-      .then(({ data }) => {
-        //set data somewhere
-        console.log(data);
-        dispatch(setTargetProducts(data));
-      })
-      .then(() => fetchFavorites())
-      .catch((err) => console.log(err));
+    console.log('skipping target');
+    // console.log('target reducer firing ');
+    // return axios
+    //   .post('/getPrices', {
+    //     item: item,
+    //   })
+    //   .then(({ data }) => {
+    //     //set data somewhere
+    //     console.log(data);
+    //     dispatch(setTargetProducts(data));
+    //   })
+    //   .then(() => fetchFavorites())
+    //   .catch((err) => console.log(err));
   };
 }
 
