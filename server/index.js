@@ -14,6 +14,7 @@ require('./oauthfb');
 const nodemailer = require('nodemailer');
 
 
+const cookieParser = require('cookie-parser');
 
 PORT = 3001;
 const app = express();
@@ -23,6 +24,7 @@ const userController = require('./controllers/userController');
 const cookieController = require('./controllers/cookieController');
 const sessionController = require('./controllers/sessionController');
 
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

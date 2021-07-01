@@ -124,7 +124,7 @@ export default function SignInSide() {
             className={classes.form}
             method='POST'
             action='/login'
-            noValidate
+            required
           >
             <TextField
               variant='outlined'

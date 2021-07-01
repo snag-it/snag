@@ -15,3 +15,4 @@ export const FETCH_FAVORITE = "FETCH_FAVORITE";
 export const SIGN_IN = "SIGN_IN";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
+export const FETCH_HISTORY = "FETCH_HISTORY";
