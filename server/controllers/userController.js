@@ -47,7 +47,7 @@ userController.verifyUser = (req, res, next) => {
 userController.addFavorite = async (req, res, next) => {
   try {
     // instead of the actual id, do req.cookies.ssid
-    const user = await User.findOne({ _id: '60dcd9ade4979317ae5a6c23' });
+    const user = await User.findOne({ _id: req.cookies.ssid });
     // spread previous favorites into new array
     const userFavorites = [...user.favorites];
     // get new item object off of request body
@@ -57,7 +57,7 @@ userController.addFavorite = async (req, res, next) => {
     // update the user's file with the new favorites array
     // instead of the actual id, do req.cookies.ssid
     const userUpdated = await User.findOneAndUpdate(
-      { _id: '60dcd9ade4979317ae5a6c23' },
+      { _id: req.cookies.ssid },
       { favorites: userFavorites },
       { new: true }
     );
@@ -72,14 +72,14 @@ userController.addFavorite = async (req, res, next) => {
 userController.removeFavorite = async (req, res, next) => {
   try {
     // instead of the actual id, do req.cookies.ssid
-    const user = await User.findOne({ _id: '60dcd9ade4979317ae5a6c23' });
+    const user = await User.findOne({ _id: req.cookies.ssid });
     const origFavorites = [...user.favorites];
     const newFavoritesList = origFavorites.filter((favObj) => {
       return favObj.title !== req.body.removeFavorite.title;
     });
     // instead of the actual id, do req.cookies.ssid
     const userUpdated = await User.findOneAndUpdate(
-      { _id: '60dcd9ade4979317ae5a6c23' },
+      { _id: req.cookies.ssid },
       { favorites: newFavoritesList },
       { new: true }
     );
@@ -94,7 +94,7 @@ userController.removeFavorite = async (req, res, next) => {
 userController.getUserData = async (req, res, next) => {
   try {
     // get the user from the database from whoever just logged in
-    const user = await User.findOne({ _id: '60dcd9ade4979317ae5a6c23' });
+    const user = await User.findOne({ _id: req.cookies.ssid });
     // we want to send to frontend: username, email, favorites, and history
     const userData = {
       username: user.username,
@@ -117,11 +117,11 @@ userController.addHistory = async (req, res, next) => {
       results: res.locals.scraped,
     });
     console.log(historyItem._id);
-    const user = await User.findOne({ _id: '60dcd9ade4979317ae5a6c23' });
+    const user = await User.findOne({ _id: req.cookies.ssid });
     const updatedHistory = [...user.history];
     updatedHistory.push(historyItem._id);
     const userUpdated = await User.findOneAndUpdate(
-      { _id: '60dcd9ade4979317ae5a6c23' },
+      { _id: req.cookies.ssid },
       { history: updatedHistory },
       { new: true }
     );
@@ -154,7 +154,7 @@ userController.addHistory = async (req, res, next) => {
 
 userController.getHistoryData = async (req, res, next) => {
   try {
-    const user = await User.findOne({ _id: '60dcd9ade4979317ae5a6c23' });
+    const user = await User.findOne({ _id: req.cookies.ssid });
     console.log(user.history);
     let historyData = await History.find({ _id: { $in: user.history } });
     console.log('history data: ', historyData);
