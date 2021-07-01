@@ -130,25 +130,25 @@ export default function SignInSide() {
             <TextField
               variant='outlined'
               margin='normal'
-              required
               fullWidth
               id='email'
               label='Email Address'
               name='email'
               autoComplete='email'
               autoFocus
+              required
             />
 
             <TextField
               variant='outlined'
               margin='normal'
-              required
               fullWidth
               name='password'
               label='Password'
               type='password'
               id='password'
               autoComplete='current-password'
+              required
             />
 
             <FormControlLabel
@@ -180,8 +180,6 @@ export default function SignInSide() {
             
             <br></br>
 
-            <a href="/auth/facebook" fullWidth variant='contained' color='primary' className={classes.link}>
-            <i className="fab fa-facebook"></i>Login with Facebook</a>
 
             <Grid container>
               <Grid item xs>
