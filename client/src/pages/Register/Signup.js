@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://static.vecteezy.com/system/resources/previews/002/194/883/original/3d-shopping-online-store-for-sale-mobile-e-commerce-3d-pink-pastel-background-shop-online-on-mobile-app-24-hours-shopping-cart-credit-card-minimal-shopping-online-store-device-3d-rendering-vector.jpg)',
+    backgroundImage: 'url(http://localhost:3001/img/LOGO2.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  img: {
+    margin: '0px',
+    padding: '0px',
   },
 }));
 
@@ -81,6 +85,8 @@ export default function SignInSide() {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
 
+        <img src="http://localhost:3001/img/logo.png"/>
+
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -89,7 +95,7 @@ export default function SignInSide() {
             Sign Up
           </Typography>
 
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate method="POST" action='/signup'>
           <TextField
               variant="outlined"
               margin="normal"
