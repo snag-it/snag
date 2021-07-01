@@ -145,9 +145,9 @@ app.post(
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
-          user: "snagit.app@gmail.com",
-          pass: "luhansehun"
-      }
+        user: "snagit.app@gmail.com",
+        pass: "luhansehun",
+      },
     });
 
     console.log("testing", req.body.email);
@@ -155,7 +155,7 @@ app.post(
       from: "",
       to: req.body.email,
       subject: "Thank you so much for choosing our service.",
-      text: "Daily deals will be send to you with promo codes."
+      text: "Daily deals will be send to you with promo codes.",
     };
 
     transporter.sendMail(options, function (err, info) {
