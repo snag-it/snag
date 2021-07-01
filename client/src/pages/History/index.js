@@ -1,11 +1,7 @@
-import React from 'react'
+import React, { useEffect } from "react";
 
 function HistoryPage() {
-  return (
-    <div>
-      History Page
-    </div>
-  )
+  return <div>History Page</div>;
 }
 
-export default HistoryPage
+export default HistoryPage;
