@@ -155,8 +155,8 @@ app.post(
     const options = {
       from: '',
       to: req.body.email,
-      subject: 'Thank you so much for choosing our service.',
-      text: 'Daily deals will be send to you with promo codes.',
+      subject: 'Thank you so much for choosing our service!',
+      text: 'Thank you for signing up with SnagIt! Daily deals will be sent to you with promo codes. Get ready to save lots of money!',
     };
 
     transporter.sendMail(options, function (err, info) {

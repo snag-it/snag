@@ -24,6 +24,7 @@ import { sampleAmazonData } from '../../sampleData/sampleAmazonData';
 import { sampleEbayData } from '../../sampleData/sampleEbayData';
 import { sampleTargetData } from '../../sampleData/sampleTargetData';
 import NavBar from '../../components/NavBar';
+import { trackPromise } from 'react-promise-tracker';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +68,7 @@ function Search({
   fetchAmazon,
   fetchEbay,
   fetchTarget,
+  fetchStarted,
 }) {
   const classes = useStyles();
   const [checked, setChecked] = useState([0, 1, 2]);
@@ -74,6 +76,11 @@ function Search({
   const [userInput, setUserInput] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
   const [placeholder, setPlaceholder] = useState('');
+  // const [load, setLoad] = useState(false);
+
+  // const onLoad = () => {
+  //   setLoad(true);
+  // };
 
   useEffect(() => {
     setChosenRetailers(checked.map((value) => retailers[value]));
@@ -97,9 +104,12 @@ function Search({
 
   const handleInputChange = (event) => setUserInput(event.target.value);
   const handleToggleAccordianExpansion = (event) => setIsExpanded(!isExpanded);
-  const handleSearchSubmit = () => {
+
+  function handleSearchSubmit() {
     isExpanded && handleToggleAccordianExpansion();
     const uriEncodedInput = encodeURI(userInput);
+    const fetching = true;
+
     if (userInput.length === 0) setPlaceholder('Search for an item');
     else {
       //
@@ -107,7 +117,7 @@ function Search({
       fetchEbay(uriEncodedInput);
       fetchTarget(uriEncodedInput);
     } // Promise.all() here
-  };
+  }
 
   return (
     <div>
