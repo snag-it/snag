@@ -1,10 +1,10 @@
-import React from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 
-import * as actionCreators from "../actions/actionCreators";
-import RetailItem from "./RetailItem";
+import * as actionCreators from '../actions/actionCreators';
+import RetailItem from './RetailItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,8 +16,8 @@ function RetailList({
   retailer,
   logo,
   productData,
-  addFavorite,
-  removeFavorite,
+  addFavoriteToDB,
+  removeFavoriteFromDB,
   markFavorite,
   unmarkFavorite,
 }) {
@@ -34,8 +34,8 @@ function RetailList({
           link={product.link}
           retailer={retailer}
           logo={logo}
-          addFavorite={addFavorite}
-          removeFavorite={removeFavorite}
+          addFavoriteToDB={addFavoriteToDB}
+          removeFavoriteFromDB={removeFavoriteFromDB}
           markFavorite={markFavorite}
           unmarkFavorite={unmarkFavorite}
         />
@@ -47,8 +47,8 @@ function RetailList({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      addFavorite: actionCreators.addFavorite,
-      removeFavorite: actionCreators.removeFavorite,
+      addFavoriteToDB: actionCreators.addFavoriteToDB,
+      removeFavoriteFromDB: actionCreators.removeFavoriteFromDB,
       markFavorite: actionCreators.markFavorite,
       unmarkFavorite: actionCreators.unmarkFavorite,
     },

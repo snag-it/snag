@@ -32,7 +32,6 @@ userController.verifyUser = async (req, res, next) => {
   console.log(req.body);
   try {
     const user = await User.findOne({ email: req.body.email });
-    console.log(user);
     const userStatus = await user.comparePassword(req.body.password);
     if (userStatus === true) {
       res.locals.user = user;
@@ -53,7 +52,7 @@ userController.addFavorite = async (req, res, next) => {
     // spread previous favorites into new array
     const userFavorites = [...user.favorites];
     // get new item object off of request body
-    const newFavorite = req.body.addFavorite;
+    const newFavorite = req.body.requestItem;
     // push new favorite onto entire favorites list
     userFavorites.push(newFavorite);
     // update the user's file with the new favorites array
@@ -77,7 +76,7 @@ userController.removeFavorite = async (req, res, next) => {
     const user = await User.findOne({ _id: req.cookies.ssid });
     const origFavorites = [...user.favorites];
     const newFavoritesList = origFavorites.filter((favObj) => {
-      return favObj.title !== req.body.removeFavorite.title;
+      return favObj.title !== req.body.item.title;
     });
     // instead of the actual id, do req.cookies.ssid
     const userUpdated = await User.findOneAndUpdate(
@@ -94,10 +93,12 @@ userController.removeFavorite = async (req, res, next) => {
 };
 
 userController.getUserData = async (req, res, next) => {
+  console.log('hit');
   try {
     // get the user from the database from whoever just logged in
     const user = await User.findOne({ _id: req.cookies.ssid });
     // we want to send to frontend: username, email, favorites, and history
+    console.log(user);
     const userData = {
       username: user.username,
       email: user.email,

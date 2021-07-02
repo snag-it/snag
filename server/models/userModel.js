@@ -15,7 +15,7 @@ const userSchema = new Schema({
       id: { type: String },
       title: { type: String },
       retailer: { type: String },
-      price: { type: Number },
+      price: { type: String },
       imgSrc: { type: String },
       link: { type: String },
     },
